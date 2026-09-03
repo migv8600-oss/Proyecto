@@ -12,15 +12,15 @@ let isPhysicsInitialized = false;
 // Comprehensive Card Metadata Registry (Santa Lucía Aesthetic)
 const CARD_DATA = {
   'hero-card': {
-    title: 'Centro Med & Clínica Santa Lucía',
-    category: 'Salud y Bienestar desde 1982',
+    title: 'Centro Med',
+    category: 'Consultorio Médico & Salud Integral',
     price: null,
-    badge: '4 Décadas de Experiencia',
+    badge: 'Atención Médica 24/7',
     icon: '🏥',
-    description: 'Más de cuatro décadas al servicio de la comunidad. Brindamos atención médica integral con profesionales altamente calificados, quirófanos equipados y emergencias las 24 horas.',
-    features: ['Emergencias 24 Horas / 365 días', 'Trato humano: Cada paciente es familia', 'Tecnología de diagnóstico moderna', 'Quirófanos y área de internación equipados'],
+    description: 'Atención médica integral con profesionales altamente calificados, tecnología avanzada y emergencias las 24 horas. ¡Toca o arrastra cualquier tarjeta en Antigravedad!',
+    features: ['Emergencias 24 Horas / 365 días', 'Trato humano y cercano', 'Tecnología de diagnóstico moderna', 'Quirófanos y área de internación equipados'],
     ctaText: 'Reservar Cita por WhatsApp',
-    waMessage: 'Hola, me gustaría agendar una consulta médica en Centro Med / Clínica Santa Lucía.'
+    waMessage: 'Hola Centro Med, me gustaría agendar una consulta médica.'
   },
   'service-1': {
     title: 'Medicina General',
