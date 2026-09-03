@@ -30,8 +30,13 @@
     }
   </script>
 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Montserrat:wght@400;600;700;800&family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
   <!-- Favicon SVG -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎨</text></svg>">
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="styles.css" />
@@ -41,7 +46,7 @@
 </head>
 <body class="bg-clinical-light text-slate-800 antialiased min-h-screen">
 
-  <!-- ================= 1. LOGIN SCREEN ================= -->
+  <!-- LOGIN SCREEN -->
   <div id="login-screen" class="fixed inset-0 z-50 bg-navy-900 flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl p-8 sm:p-10 max-w-md w-full shadow-2xl border border-slate-100 relative">
       
@@ -84,7 +89,7 @@
     </div>
   </div>
 
-  <!-- ================= 2. PROTECTED ADMIN APP ================= -->
+  <!-- PROTECTED ADMIN APP -->
   <div id="admin-app" class="hidden min-h-screen flex flex-col md:flex-row">
 
     <!-- SIDEBAR NAVIGATION -->
@@ -106,6 +111,9 @@
           <button onclick="switchTab('services')" id="tab-btn-services" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold bg-clinical-blue text-white transition shadow-md">
             <span>🩺</span> Servicios & Precios
           </button>
+          <button onclick="switchTab('theme')" id="tab-btn-theme" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-300 hover:bg-white/10 hover:text-white transition">
+            <span>🎨</span> Diseño & Aspecto Visual
+          </button>
           <button onclick="switchTab('appointments')" id="tab-btn-appointments" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-300 hover:bg-white/10 hover:text-white transition">
             <span>📅</span> Citas Médicas
           </button>
@@ -120,7 +128,7 @@
 
       <!-- Bottom Actions -->
       <div class="pt-6 border-t border-white/10 flex flex-col gap-3">
-        <a href="index.html" class="w-full py-2.5 px-4 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl text-center transition flex items-center justify-center gap-2">
+        <a href="index.html" target="_blank" class="w-full py-2.5 px-4 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl text-center transition flex items-center justify-center gap-2">
           <span>🌐 Ver Sitio Web Público</span>
         </a>
         <button onclick="logoutAdmin()" class="w-full py-2 px-4 bg-rose-600/80 hover:bg-rose-600 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5">
@@ -136,10 +144,9 @@
       <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-slate-200">
         <div>
           <h2 id="page-title" class="text-2xl sm:text-3xl font-extrabold text-navy-900 tracking-tight">Gestión de Servicios y Precios</h2>
-          <p id="page-subtitle" class="text-sm text-slate-500">Edita los precios, descripciones e íconos de las tarjetas en tiempo real.</p>
+          <p id="page-subtitle" class="text-sm text-slate-500">Edita los precios, colores y elementos visuales de la página web en tiempo real.</p>
         </div>
 
-        <!-- Action Button -->
         <div id="header-actions">
           <button onclick="openNewServiceModal()" class="px-5 py-2.5 bg-clinical-blue hover:bg-blue-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-blue-500/20 transition flex items-center gap-2">
             <span>+ Agregar Nuevo Servicio</span>
@@ -158,7 +165,122 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="services-admin-grid"></div>
       </section>
 
-      <!-- TAB 2: CITAS MÉDICAS -->
+      <!-- TAB 2: DISEÑO & ASPECTO VISUAL -->
+      <section id="tab-theme" class="hidden space-y-8 max-w-4xl">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+          <h3 class="font-extrabold text-navy-900 text-xl mb-2">🎨 Editor de Tema & Paleta de Colores</h3>
+          <p class="text-xs text-slate-500 mb-6">Personaliza la combinación cromática completa de tu página web médica.</p>
+
+          <form id="theme-form" class="space-y-6">
+            
+            <!-- Color Palette Selector -->
+            <div>
+              <label class="block text-xs font-bold text-slate-500 uppercase mb-3">Paleta de Colores Principal</label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                
+                <!-- Option 1: Blue Clinical -->
+                <label class="relative flex flex-col p-4 rounded-2xl border-2 border-slate-200 cursor-pointer hover:border-blue-500 transition shadow-sm has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50/50">
+                  <input type="radio" name="color-palette" value="blue" checked class="sr-only" />
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="w-5 h-5 rounded-full bg-[#0A2540]"></span>
+                    <span class="w-5 h-5 rounded-full bg-[#0066FF]"></span>
+                    <span class="w-5 h-5 rounded-full bg-[#F8FAFC] border"></span>
+                  </div>
+                  <span class="font-bold text-navy-900 text-sm">Azul Clínico</span>
+                  <span class="text-[11px] text-slate-500">Clásico & Profesional</span>
+                </label>
+
+                <!-- Option 2: Emerald Green -->
+                <label class="relative flex flex-col p-4 rounded-2xl border-2 border-slate-200 cursor-pointer hover:border-emerald-500 transition shadow-sm has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-50/50">
+                  <input type="radio" name="color-palette" value="emerald" class="sr-only" />
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="w-5 h-5 rounded-full bg-[#064E3B]"></span>
+                    <span class="w-5 h-5 rounded-full bg-[#059669]"></span>
+                    <span class="w-5 h-5 rounded-full bg-[#F0FDF4] border"></span>
+                  </div>
+                  <span class="font-bold text-navy-900 text-sm">Verde Esmeralda</span>
+                  <span class="text-[11px] text-slate-500">Salud & Bienestar</span>
+                </label>
+
+                <!-- Option 3: Modern Purple -->
+                <label class="relative flex flex-col p-4 rounded-2xl border-2 border-slate-200 cursor-pointer hover:border-purple-500 transition shadow-sm has-[:checked]:border-purple-600 has-[:checked]:bg-purple-50/50">
+                  <input type="radio" name="color-palette" value="purple" class="sr-only" />
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="w-5 h-5 rounded-full bg-[#3B0764]"></span>
+                    <span class="w-5 h-5 rounded-full bg-[#7C3AED]"></span>
+                    <span class="w-5 h-5 rounded-full bg-[#FAF5FF] border"></span>
+                  </div>
+                  <span class="font-bold text-navy-900 text-sm">Violeta Moderno</span>
+                  <span class="text-[11px] text-slate-500">Innovación Médica</span>
+                </label>
+
+                <!-- Option 4: Dark Mode -->
+                <label class="relative flex flex-col p-4 rounded-2xl border-2 border-slate-200 cursor-pointer hover:border-sky-500 transition shadow-sm has-[:checked]:border-sky-600 has-[:checked]:bg-slate-900 has-[:checked]:text-white">
+                  <input type="radio" name="color-palette" value="dark" class="sr-only" />
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="w-5 h-5 rounded-full bg-[#0F172A]"></span>
+                    <span class="w-5 h-5 rounded-full bg-[#38BDF8]"></span>
+                    <span class="w-5 h-5 rounded-full bg-[#020617] border"></span>
+                  </div>
+                  <span class="font-bold text-sm">Modo Oscuro</span>
+                  <span class="text-[11px] text-slate-400">Elegante & Nocturno</span>
+                </label>
+
+              </div>
+            </div>
+
+            <!-- Typography & Font Family Selector -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
+              <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Tipografía / Fuente de Texto</label>
+                <select id="theme-font" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-semibold focus:border-clinical-blue focus:outline-none">
+                  <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans (Predeterminada)</option>
+                  <option value="'Inter', sans-serif">Inter (Limpia & Minimalista)</option>
+                  <option value="'Montserrat', sans-serif">Montserrat (Moderna & Enfática)</option>
+                  <option value="'Outfit', sans-serif">Outfit (Futurista & Elegante)</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Redondeo de Tarjetas Flotantes</label>
+                <select id="theme-radius" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-semibold focus:border-clinical-blue focus:outline-none">
+                  <option value="1.5rem">Curvo Suave (24px - Estilo App)</option>
+                  <option value="1rem">Moderno Balanceado (16px)</option>
+                  <option value="0.5rem">Clásico Recto (8px)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Default Layout Mode on Load -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
+              <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Modo de Vista Predeterminado al Cargar</label>
+                <select id="theme-default-mode" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-semibold focus:border-clinical-blue focus:outline-none">
+                  <option value="zerog">🌌 Gravedad 0 (Física Flotante)</option>
+                  <option value="grid">📐 Modo Cuadrícula (Vista Estática Ordenada)</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Efecto Glassmorphism / Fondo</label>
+                <select id="theme-glass" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-semibold focus:border-clinical-blue focus:outline-none">
+                  <option value="glass">Cristal Translúcido (Glassmorphism 85%)</option>
+                  <option value="solid">Fondo Clínico Sólido (100% Opaco)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="pt-6 border-t border-slate-100 flex justify-end">
+              <button type="submit" class="px-6 py-3 bg-clinical-blue hover:bg-blue-700 text-white font-extrabold text-sm rounded-xl shadow-lg shadow-blue-500/20 transition flex items-center gap-2">
+                <span>🎨 Aplicar Nuevo Diseño a la Web</span>
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </section>
+
+      <!-- TAB 3: CITAS MÉDICAS -->
       <section id="tab-appointments" class="hidden space-y-6">
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <div class="p-4 sm:p-6 border-b border-slate-100 flex items-center justify-between">
@@ -183,12 +305,12 @@
         </div>
       </section>
 
-      <!-- TAB 3: TESTIMONIOS -->
+      <!-- TAB 4: TESTIMONIOS -->
       <section id="tab-testimonials" class="hidden space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="testimonials-admin-grid"></div>
       </section>
 
-      <!-- TAB 4: MARCA, FOTOS & DATOS -->
+      <!-- TAB 5: MARCA, FOTOS & DATOS -->
       <section id="tab-branding" class="hidden space-y-6">
         <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm max-w-3xl">
           <h3 class="font-extrabold text-navy-900 text-xl mb-6 border-b border-slate-100 pb-3">Información del Consultorio & Marca</h3>

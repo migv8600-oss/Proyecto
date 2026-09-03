@@ -1,8 +1,7 @@
 /**
- * Centro Med - Admin Panel JavaScript Logic & Protected Authentication
+ * Centro Med - Admin Panel JavaScript Logic & Theme Design Editor
  */
 
-// Unique Administrator Credentials
 const ADMIN_USER = 'admin_centromed';
 const ADMIN_PASS = 'CentroMed2026!Secured';
 
@@ -26,6 +25,15 @@ document.addEventListener('DOMContentLoaded', () => {
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
       handleLogin();
+    });
+  }
+
+  // Theme Form Submit
+  const themeForm = document.getElementById('theme-form');
+  if (themeForm) {
+    themeForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      saveThemeSettings();
     });
   }
 
@@ -57,6 +65,7 @@ function checkAuthStatus() {
   if (isAuthenticated) {
     loginScreen.classList.add('hidden');
     adminApp.classList.remove('hidden');
+    loadThemeSettings();
     loadBrandingSettings();
     loadServices();
     loadAppointments();
@@ -91,7 +100,7 @@ function logoutAdmin() {
 
 // Tab Switcher
 function switchTab(tabId) {
-  const tabs = ['services', 'appointments', 'testimonials', 'branding'];
+  const tabs = ['services', 'theme', 'appointments', 'testimonials', 'branding'];
   tabs.forEach(t => {
     const section = document.getElementById(`tab-${t}`);
     const btn = document.getElementById(`tab-btn-${t}`);
@@ -108,6 +117,7 @@ function switchTab(tabId) {
 
   const titles = {
     services: 'Gestión de Servicios y Precios',
+    theme: '🎨 Editor de Aspecto Visual & Tema',
     appointments: 'Solicitudes de Citas Médicas',
     testimonials: 'Testimonios & Opiniones de Pacientes',
     branding: 'Configuración de Marca, Fotos & Datos'
@@ -127,7 +137,32 @@ function showAlert(message) {
   }
 }
 
-// ================= 1. SERVICES MANAGEMENT =================
+// ================= THEME & VISUAL DESIGN EDITOR =================
+function loadThemeSettings() {
+  const theme = JSON.parse(localStorage.getItem('centromed_theme') || '{}');
+  if (theme.palette) {
+    const radio = document.querySelector(`input[name="color-palette"][value="${theme.palette}"]`);
+    if (radio) radio.checked = true;
+  }
+  if (theme.font) document.getElementById('theme-font').value = theme.font;
+  if (theme.radius) document.getElementById('theme-radius').value = theme.radius;
+  if (theme.defaultMode) document.getElementById('theme-default-mode').value = theme.defaultMode;
+  if (theme.glass) document.getElementById('theme-glass').value = theme.glass;
+}
+
+function saveThemeSettings() {
+  const palette = document.querySelector('input[name="color-palette"]:checked').value;
+  const font = document.getElementById('theme-font').value;
+  const radius = document.getElementById('theme-radius').value;
+  const defaultMode = document.getElementById('theme-default-mode').value;
+  const glass = document.getElementById('theme-glass').value;
+
+  const themeConfig = { palette, font, radius, defaultMode, glass };
+  localStorage.setItem('centromed_theme', JSON.stringify(themeConfig));
+  showAlert('Nuevo diseño visual aplicado correctamente. Abre la página pública para ver los cambios.');
+}
+
+// ================= SERVICES MANAGEMENT =================
 async function loadServices() {
   const container = document.getElementById('services-admin-grid');
   if (!container) return;
@@ -271,7 +306,7 @@ async function deleteService(cardId) {
   showAlert('Servicio eliminado correctamente.');
 }
 
-// ================= 2. BRANDING & PHOTOS =================
+// ================= BRANDING & PHOTOS =================
 function loadBrandingSettings() {
   const settings = JSON.parse(localStorage.getItem('centromed_branding') || '{}');
   if (settings.name) document.getElementById('brand-name').value = settings.name;
@@ -298,7 +333,7 @@ function saveBrandingSettings() {
   showAlert('Marca, foto/logo y horarios guardados correctamente.');
 }
 
-// ================= 3. APPOINTMENTS =================
+// ================= APPOINTMENTS =================
 function loadAppointments() {
   const tableBody = document.getElementById('appointments-table-body');
   const countEl = document.getElementById('appointments-count');
@@ -331,7 +366,7 @@ function loadAppointments() {
   `).join('');
 }
 
-// ================= 4. TESTIMONIALS =================
+// ================= TESTIMONIALS =================
 function loadTestimonials() {
   const container = document.getElementById('testimonials-admin-grid');
   if (!container) return;

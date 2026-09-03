@@ -1,16 +1,19 @@
-/* Custom Styles for Centro Med - Anti-Gravity UI */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+/* Custom Styles for Centro Med / Santa Lucía Aesthetic - Anti-Gravity UI */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Outfit:wght@400;600;700;800&display=swap');
 
 :root {
-  --primary-navy: #0A2540;
-  --primary-blue: #0066FF;
-  --bg-medical: #F8FAFC;
-  --whatsapp-green: #25D366;
-  --whatsapp-hover: #1EBE5B;
+  --primary-navy: #0B2545;
+  --primary-blue: #134074;
+  --accent-gold: #D97706;
+  --bg-medical: #EEF4F8;
+  --whatsapp-green: #22C55E;
+  --whatsapp-hover: #16A34A;
+  --card-radius: 1.25rem;
+  --font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-family);
   background-color: var(--bg-medical);
   color: #1E293B;
   overflow-x: hidden;
@@ -18,29 +21,30 @@ body {
   -webkit-user-select: none;
 }
 
-/* Glassmorphism utility */
+/* Glassmorphism & Santa Lucía Navbar */
 .glass-nav {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  background: rgba(11, 37, 69, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(226, 232, 240, 0.9);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(203, 213, 225, 0.8);
 }
 
 .glass-control {
-  background: rgba(10, 37, 64, 0.92);
+  background: rgba(11, 37, 69, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Floating Cards in Physics Mode */
+/* Floating Physics Cards */
 .physics-card {
   position: absolute;
   top: 0;
@@ -48,20 +52,21 @@ body {
   will-change: transform;
   touch-action: none;
   cursor: grab;
-  box-shadow: 0 10px 25px -5px rgba(10, 37, 64, 0.1), 0 8px 10px -6px rgba(10, 37, 64, 0.05);
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 12px 30px -5px rgba(11, 37, 69, 0.12), 0 8px 12px -6px rgba(11, 37, 69, 0.08);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+  border-radius: var(--card-radius);
 }
 
 .physics-card:active {
   cursor: grabbing;
-  box-shadow: 0 20px 35px -5px rgba(0, 102, 255, 0.25);
-  border-color: rgba(0, 102, 255, 0.4);
+  box-shadow: 0 20px 40px -5px rgba(19, 64, 116, 0.3);
+  border-color: rgba(19, 64, 116, 0.5);
 }
 
-/* Grid Mode Layout overrides */
+/* Grid Mode Layout */
 .grid-mode-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
   gap: 1.5rem;
   padding: 6rem 1.5rem 8rem 1.5rem;
   max-width: 1280px;
@@ -75,41 +80,27 @@ body {
   left: auto !important;
   width: 100% !important;
   cursor: pointer;
+  border-radius: var(--card-radius);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .grid-mode-card:hover {
-  transform: translateY(-4px) !important;
-  box-shadow: 0 15px 30px -5px rgba(0, 102, 255, 0.15);
+  transform: translateY(-5px) !important;
+  box-shadow: 0 18px 36px -5px rgba(19, 64, 116, 0.18);
 }
 
-/* Custom Scrollbars */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #F1F5F9;
-}
-::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
-}
-
-/* Badge pulse animation */
-@keyframes pulse-subtle {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.85; transform: scale(1.04); }
-}
-
-.pulse-badge {
-  animation: pulse-subtle 3s infinite ease-in-out;
-}
-
-/* Background floating medical particles */
+/* Background Grid Pattern */
 .bg-grid-pattern {
   background-image: radial-gradient(#CBD5E1 1.2px, transparent 1.2px);
   background-size: 28px 28px;
+}
+
+/* Emergency Badge Pulse */
+@keyframes pulse-emergency {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.05); }
+}
+
+.emergency-pulse {
+  animation: pulse-emergency 2.5s infinite ease-in-out;
 }
