@@ -441,8 +441,51 @@ function closeModal(modalId) {
   }
 }
 
+// Apply dynamic branding, logo, and price settings from Admin Panel
+function applyDynamicBrandingAndServices() {
+  const branding = JSON.parse(localStorage.getItem('centromed_branding') || '{}');
+  const services = JSON.parse(localStorage.getItem('centromed_services') || '[]');
+
+  // Apply custom branding
+  if (branding.name) {
+    document.querySelectorAll('.brand-name-text').forEach(el => el.innerText = branding.name);
+  }
+  if (branding.subheading) {
+    const heroDesc = document.querySelector('#hero-card p');
+    if (heroDesc) heroDesc.innerText = branding.subheading;
+  }
+  if (branding.whatsapp) {
+    document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+      link.href = `https://wa.me/${branding.whatsapp}?text=Hola%20${encodeURIComponent(branding.name || 'Centro Med')}%2C%20quisiera%20agendar%20una%20cita`;
+    });
+  }
+
+  // Apply custom prices to cards
+  services.forEach(serv => {
+    if (CARD_DATA[serv.card_id]) {
+      CARD_DATA[serv.card_id].title = serv.title;
+      CARD_DATA[serv.card_id].price = `$${parseFloat(serv.price).toFixed(2)}`;
+      CARD_DATA[serv.card_id].description = serv.description;
+      if (serv.category) CARD_DATA[serv.card_id].category = serv.category;
+      if (serv.icon) CARD_DATA[serv.card_id].icon = serv.icon;
+    }
+
+    // Update prices on floating DOM cards
+    const cardEl = document.getElementById(serv.card_id);
+    if (cardEl) {
+      const priceSpan = cardEl.querySelector('.text-emerald-700');
+      if (priceSpan) priceSpan.innerText = `$${parseFloat(serv.price).toFixed(2)}`;
+      const titleEl = cardEl.querySelector('h3');
+      if (titleEl) titleEl.innerText = serv.title;
+    }
+  });
+}
+
 // Event Listeners Setup
 document.addEventListener('DOMContentLoaded', () => {
+  // Apply live branding & custom service prices edited in admin.html
+  applyDynamicBrandingAndServices();
+
   // Initialize Matter.js zero gravity physics after rendering
   setTimeout(initPhysics, 100);
 

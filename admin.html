@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de Administración | Centro Med</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              800: '#0B1E36',
+              900: '#0A2540',
+            },
+            clinical: {
+              blue: '#0066FF',
+              light: '#F8FAFC',
+            },
+            whatsapp: {
+              DEFAULT: '#25D366',
+              hover: '#1EBE5B',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Favicon SVG -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚙️</text></svg>">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Supabase JS Client CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-clinical-light text-slate-800 antialiased min-h-screen flex flex-col md:flex-row">
+
+  <!-- ================= SIDEBAR NAVIGATION ================= -->
+  <aside class="w-full md:w-64 bg-navy-900 text-white flex-shrink-0 flex flex-col justify-between p-6 border-r border-navy-800">
+    <div>
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-3 mb-8 group">
+        <div class="w-10 h-10 rounded-xl bg-clinical-blue text-white flex items-center justify-center font-black text-xl shadow-lg">
+          🏥
+        </div>
+        <div>
+          <h1 class="font-extrabold text-lg tracking-tight leading-none text-white">Centro Med</h1>
+          <span class="text-[10px] uppercase font-bold text-blue-400 tracking-wider">Panel de Control</span>
+        </div>
+      </a>
+
+      <!-- Navigation Tabs -->
+      <nav class="space-y-2">
+        <button onclick="switchTab('services')" id="tab-btn-services" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold bg-clinical-blue text-white transition shadow-md">
+          <span>🩺</span> Servicios & Precios
+        </button>
+        <button onclick="switchTab('appointments')" id="tab-btn-appointments" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-300 hover:bg-white/10 hover:text-white transition">
+          <span>📅</span> Citas Médicas
+        </button>
+        <button onclick="switchTab('testimonials')" id="tab-btn-testimonials" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-300 hover:bg-white/10 hover:text-white transition">
+          <span>⭐</span> Testimonios
+        </button>
+        <button onclick="switchTab('branding')" id="tab-btn-branding" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-300 hover:bg-white/10 hover:text-white transition">
+          <span>⚙️</span> Marca, Fotos & Datos
+        </button>
+      </nav>
+    </div>
+
+    <!-- Bottom Actions -->
+    <div class="pt-6 border-t border-white/10 flex flex-col gap-3">
+      <a href="index.html" class="w-full py-2.5 px-4 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl text-center transition flex items-center justify-center gap-2">
+        <span>🌐 Ver Sitio Web Público</span>
+      </a>
+      <span class="text-[11px] text-slate-400 text-center">Centro Med Admin v2.0</span>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN CONTENT AREA ================= -->
+  <main class="flex-1 p-6 sm:p-10 overflow-y-auto">
+
+    <!-- Header Bar -->
+    <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-slate-200">
+      <div>
+        <h2 id="page-title" class="text-2xl sm:text-3xl font-extrabold text-navy-900 tracking-tight">Gestión de Servicios y Precios</h2>
+        <p id="page-subtitle" class="text-sm text-slate-500">Edita los precios, descripciones e íconos de las tarjetas flotantes en tiempo real.</p>
+      </div>
+
+      <!-- Action Button -->
+      <div id="header-actions">
+        <button onclick="openNewServiceModal()" class="px-5 py-2.5 bg-clinical-blue hover:bg-blue-700 text-white font-bold text-sm rounded-xl shadow-lg shadow-blue-500/20 transition flex items-center gap-2">
+          <span>+ Agregar Nuevo Servicio</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Global Notification Banner -->
+    <div id="admin-alert" class="hidden mb-6 p-4 rounded-2xl bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold text-sm flex items-center justify-between">
+      <span id="admin-alert-text">✓ Cambios guardados correctamente.</span>
+      <button onclick="this.parentElement.classList.add('hidden')" class="text-emerald-600 font-extrabold">✕</button>
+    </div>
+
+    <!-- ================= TAB 1: SERVICIOS & PRECIOS ================= -->
+    <section id="tab-services" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="services-admin-grid">
+        <!-- Dynamic services cards will be rendered here -->
+      </div>
+    </section>
+
+    <!-- ================= TAB 2: CITAS MÉDICAS ================= -->
+    <section id="tab-appointments" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-4 sm:p-6 border-b border-slate-100 flex items-center justify-between">
+          <h3 class="font-bold text-navy-900 text-lg">Solicitudes de Citas Médicas</h3>
+          <span class="text-xs font-semibold bg-blue-50 text-clinical-blue px-3 py-1 rounded-full border border-blue-100" id="appointments-count">0 Citas</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm text-slate-600">
+            <thead class="bg-slate-50 text-xs uppercase text-slate-400 font-bold border-b border-slate-100">
+              <tr>
+                <th class="p-4">Paciente</th>
+                <th class="p-4">Teléfono / WhatsApp</th>
+                <th class="p-4">Servicio Solicitado</th>
+                <th class="p-4">Fecha y Hora</th>
+                <th class="p-4">Estado</th>
+                <th class="p-4 text-right">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="appointments-table-body" class="divide-y divide-slate-100">
+              <!-- Dynamic appointments rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TAB 3: TESTIMONIOS ================= -->
+    <section id="tab-testimonials" class="hidden space-y-6">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-bold text-navy-900 text-lg">Testimonios y Reseñas de Pacientes</h3>
+        <button onclick="openNewTestimonialModal()" class="px-4 py-2 bg-navy-900 hover:bg-navy-800 text-white font-bold text-xs rounded-xl transition">
+          + Añadir Testimonio
+        </button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="testimonials-admin-grid">
+        <!-- Dynamic testimonials list -->
+      </div>
+    </section>
+
+    <!-- ================= TAB 4: MARCA, FOTOS & DATOS ================= -->
+    <section id="tab-branding" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm max-w-3xl">
+        <h3 class="font-extrabold text-navy-900 text-xl mb-6 border-b border-slate-100 pb-3">Información del Consultorio & Marca</h3>
+        
+        <form id="branding-form" class="space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Nombre del Consultorio</label>
+              <input type="text" id="brand-name" value="Centro Med" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-clinical-blue focus:outline-none text-sm font-semibold" />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Número de WhatsApp (con código de país)</label>
+              <input type="text" id="brand-whatsapp" value="593999999999" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-clinical-blue focus:outline-none text-sm font-semibold" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Subtítulo / Tagline Hero</label>
+            <input type="text" id="brand-subheading" value="Atención médica integral con tecnología avanzada y profesionales dedicados a tu bienestar." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-clinical-blue focus:outline-none text-sm font-semibold" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">URL Foto o Logotipo</label>
+            <input type="url" id="brand-logo-url" placeholder="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=400&q=80" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-clinical-blue focus:outline-none text-sm font-semibold" />
+            <span class="text-xs text-slate-400 mt-1 block">Pega la URL directa de cualquier imagen o logotipo en la web.</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Horario Lunes a Viernes</label>
+              <input type="text" id="brand-hours-week" value="8:00 AM - 8:00 PM" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-semibold" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Horario Sábados</label>
+              <input type="text" id="brand-hours-sat" value="8:00 AM - 4:00 PM" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-semibold" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Dirección del Consultorio</label>
+            <input type="text" id="brand-address" value="Av. Principal de la Salud #450, Edificio Centro Med, Piso 2" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-clinical-blue focus:outline-none text-sm font-semibold" />
+          </div>
+
+          <div class="pt-4 flex justify-end">
+            <button type="submit" class="px-6 py-3 bg-clinical-blue hover:bg-blue-700 text-white font-extrabold text-sm rounded-xl shadow-lg transition">
+              💾 Guardar Cambios de Marca
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= EDIT / NEW SERVICE MODAL ================= -->
+  <div id="service-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-slate-100 relative">
+      <button onclick="closeAdminModal('service-modal')" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center font-bold">✕</button>
+      
+      <h3 id="modal-service-title" class="text-xl font-extrabold text-navy-900 mb-4">Editar Servicio Médico</h3>
+      
+      <form id="service-form" class="space-y-4">
+        <input type="hidden" id="service-card-id" />
+        
+        <div>
+          <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Nombre del Servicio</label>
+          <input type="text" id="input-title" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm font-semibold" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Categoría</label>
+            <input type="text" id="input-category" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm font-semibold" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Precio ($)</label>
+            <input type="number" step="0.01" id="input-price" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm font-semibold" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Ícono Emoji o URL Foto</label>
+            <input type="text" id="input-icon" placeholder="🩺 o https://..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm font-semibold" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Etiqueta Badge</label>
+            <input type="text" id="input-badge" placeholder="Ej: Popular" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm font-semibold" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Descripción Breve</label>
+          <textarea id="input-description" rows="3" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm font-medium"></textarea>
+        </div>
+
+        <div class="pt-3 flex justify-end gap-3">
+          <button type="button" onclick="closeAdminModal('service-modal')" class="px-4 py-2 text-slate-600 font-bold text-xs rounded-xl border border-slate-200">Cancelar</button>
+          <button type="submit" class="px-5 py-2 bg-clinical-blue text-white font-extrabold text-xs rounded-xl shadow-md">Guardar Servicio</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

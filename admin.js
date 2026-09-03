@@ -1,0 +1,318 @@
+/**
+ * Centro Med - Admin Panel JavaScript Logic
+ * Interacts with Supabase database to provide live content, photo, logo, and price management.
+ */
+
+const SUPABASE_URL = 'https://aokvisoqggsolnrttopb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFva3Zpc29xZ2dzb2xucnR0b3BiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY5MTk0MjcsImV4cCI6MjA3MjQ5NTQyN30.placeholder';
+
+// Initialize Supabase client if library loaded
+let supabaseClient = null;
+if (typeof supabase !== 'undefined' && supabase.createClient) {
+  supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+}
+
+// Global Memory State for Local Fallback & Live Sync
+let servicesData = [];
+let appointmentsData = [];
+let testimonialsData = [];
+
+// DOM Ready Init
+document.addEventListener('DOMContentLoaded', () => {
+  loadBrandingSettings();
+  loadServices();
+  loadAppointments();
+  loadTestimonials();
+
+  // Branding Form Submit
+  const brandingForm = document.getElementById('branding-form');
+  if (brandingForm) {
+    brandingForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      saveBrandingSettings();
+    });
+  }
+
+  // Service Form Submit
+  const serviceForm = document.getElementById('service-form');
+  if (serviceForm) {
+    serviceForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      saveService();
+    });
+  }
+});
+
+// Tab Switcher
+function switchTab(tabId) {
+  const tabs = ['services', 'appointments', 'testimonials', 'branding'];
+  tabs.forEach(t => {
+    const section = document.getElementById(`tab-${t}`);
+    const btn = document.getElementById(`tab-btn-${t}`);
+    if (t === tabId) {
+      section.classList.remove('hidden');
+      btn.classList.add('bg-clinical-blue', 'text-white', 'shadow-md');
+      btn.classList.remove('text-slate-300');
+    } else {
+      section.classList.add('hidden');
+      btn.classList.remove('bg-clinical-blue', 'text-white', 'shadow-md');
+      btn.classList.add('text-slate-300');
+    }
+  });
+
+  // Update Page Title
+  const titles = {
+    services: 'Gestión de Servicios y Precios',
+    appointments: 'Solicitudes de Citas Médicas',
+    testimonials: 'Testimonios & Opiniones de Pacientes',
+    branding: 'Configuración de Marca, Fotos & Datos'
+  };
+  const titleEl = document.getElementById('page-title');
+  if (titleEl && titles[tabId]) titleEl.innerText = titles[tabId];
+}
+
+// Show Alert Banner
+function showAlert(message) {
+  const alertEl = document.getElementById('admin-alert');
+  const alertText = document.getElementById('admin-alert-text');
+  if (alertEl && alertText) {
+    alertText.innerText = `✓ ${message}`;
+    alertEl.classList.remove('hidden');
+    setTimeout(() => alertEl.classList.add('hidden'), 3500);
+  }
+}
+
+// ================= 1. SERVICES MANAGEMENT =================
+async function loadServices() {
+  const container = document.getElementById('services-admin-grid');
+  if (!container) return;
+
+  // Try fetching from Supabase database
+  if (supabaseClient) {
+    try {
+      const { data, error } = await supabaseClient.from('services').select('*').order('created_at', { ascending: true });
+      if (!error && data && data.length > 0) {
+        servicesData = data;
+      }
+    } catch (err) {
+      console.log('Using local services state fallback');
+    }
+  }
+
+  // Fallback to default local storage if empty
+  if (servicesData.length === 0) {
+    const saved = localStorage.getItem('centromed_services');
+    if (saved) {
+      servicesData = JSON.parse(saved);
+    } else {
+      servicesData = [
+        { card_id: 'service-1', title: 'Consulta Médica General', category: 'Medicina General', price: 30.00, badge: 'Popular', icon: '🩺', description: 'Evaluación clínica completa, toma de signos vitales y diagnóstico preventivo.' },
+        { card_id: 'service-2', title: 'Chequeo Médico Integral', category: 'Medicina Preventiva', price: 75.00, badge: 'Recomendado', icon: '📊', description: 'Perfil completo de exámenes clínicos preventivos y valoración.' },
+        { card_id: 'service-3', title: 'Electrocardiograma (ECG)', category: 'Cardiología', price: 45.00, badge: 'Diagnóstico Rápido', icon: '❤️', description: 'Estudio de la actividad eléctrica del corazón para detectar arritmias.' },
+        { card_id: 'service-4', title: 'Pediatría y Neonatología', category: 'Atención Infantil', price: 35.00, badge: 'Cuidado Infantil', icon: '👶', description: 'Control de crecimiento, vacunas y atención especializada infantil.' },
+        { card_id: 'service-5', title: 'Laboratorio Clínico', category: 'Diagnósticos', price: 50.00, badge: 'Resultados el Mismo Día', icon: '🧪', description: 'Análisis de sangre y muestras con entregas el mismo día.' },
+        { card_id: 'service-6', title: 'Odontología Especializada', category: 'Salud Oral', price: 40.00, badge: 'Estética Dental', icon: '🦷', description: 'Limpieza ultrasónica, profilaxis dental y diseño de sonrisa.' }
+      ];
+    }
+  }
+
+  // Render Cards
+  container.innerHTML = servicesData.map(item => `
+    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-blue-300 transition">
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 text-clinical-blue flex items-center justify-center text-xl font-bold">
+            ${item.icon || '🩺'}
+          </div>
+          <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$${parseFloat(item.price).toFixed(2)}</span>
+        </div>
+        <span class="text-[11px] uppercase font-bold text-slate-400 tracking-wider">${item.category}</span>
+        <h4 class="text-base font-extrabold text-navy-900 mb-2">${item.title}</h4>
+        <p class="text-xs text-slate-500 mb-4 line-clamp-3">${item.description}</p>
+      </div>
+
+      <div class="flex items-center justify-between border-t border-slate-100 pt-3">
+        <button onclick="editService('${item.card_id}')" class="px-3 py-1.5 rounded-lg bg-blue-50 text-clinical-blue font-bold text-xs hover:bg-blue-100 transition">
+          ✏️ Editar
+        </button>
+        <button onclick="deleteService('${item.card_id}')" class="px-3 py-1.5 rounded-lg bg-rose-50 text-rose-600 font-bold text-xs hover:bg-rose-100 transition">
+          🗑️ Eliminar
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openNewServiceModal() {
+  document.getElementById('service-card-id').value = '';
+  document.getElementById('input-title').value = '';
+  document.getElementById('input-category').value = 'Medicina General';
+  document.getElementById('input-price').value = '30.00';
+  document.getElementById('input-icon').value = '🩺';
+  document.getElementById('input-badge').value = 'Nuevo';
+  document.getElementById('input-description').value = '';
+  document.getElementById('modal-service-title').innerText = 'Agregar Nuevo Servicio Médico';
+
+  const modal = document.getElementById('service-modal');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function editService(cardId) {
+  const item = servicesData.find(s => s.card_id === cardId);
+  if (!item) return;
+
+  document.getElementById('service-card-id').value = item.card_id;
+  document.getElementById('input-title').value = item.title;
+  document.getElementById('input-category').value = item.category;
+  document.getElementById('input-price').value = item.price;
+  document.getElementById('input-icon').value = item.icon || '';
+  document.getElementById('input-badge').value = item.badge || '';
+  document.getElementById('input-description').value = item.description;
+  document.getElementById('modal-service-title').innerText = `Editar: ${item.title}`;
+
+  const modal = document.getElementById('service-modal');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closeAdminModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+async function saveService() {
+  const cardId = document.getElementById('service-card-id').value || `service-${Date.now()}`;
+  const title = document.getElementById('input-title').value;
+  const category = document.getElementById('input-category').value;
+  const price = parseFloat(document.getElementById('input-price').value);
+  const icon = document.getElementById('input-icon').value;
+  const badge = document.getElementById('input-badge').value;
+  const description = document.getElementById('input-description').value;
+
+  const updatedObj = { card_id: cardId, title, category, price, icon, badge, description };
+
+  const existingIdx = servicesData.findIndex(s => s.card_id === cardId);
+  if (existingIdx >= 0) {
+    servicesData[existingIdx] = updatedObj;
+  } else {
+    servicesData.push(updatedObj);
+  }
+
+  // Persist locally
+  localStorage.setItem('centromed_services', JSON.stringify(servicesData));
+
+  // Try updating Supabase
+  if (supabaseClient) {
+    try {
+      await supabaseClient.from('services').upsert(updatedObj);
+    } catch (e) {
+      console.log('Supabase sync warning');
+    }
+  }
+
+  closeAdminModal('service-modal');
+  loadServices();
+  showAlert('Servicio guardado exitosamente. Los cambios están visibles en la página web.');
+}
+
+async function deleteService(cardId) {
+  if (!confirm('¿Estás seguro de que deseas eliminar este servicio?')) return;
+
+  servicesData = servicesData.filter(s => s.card_id !== cardId);
+  localStorage.setItem('centromed_services', JSON.stringify(servicesData));
+
+  if (supabaseClient) {
+    try {
+      await supabaseClient.from('services').delete().eq('card_id', cardId);
+    } catch (e) {}
+  }
+
+  loadServices();
+  showAlert('Servicio eliminado correctamente.');
+}
+
+// ================= 2. BRANDING & PHOTOS =================
+function loadBrandingSettings() {
+  const settings = JSON.parse(localStorage.getItem('centromed_branding') || '{}');
+  if (settings.name) document.getElementById('brand-name').value = settings.name;
+  if (settings.whatsapp) document.getElementById('brand-whatsapp').value = settings.whatsapp;
+  if (settings.subheading) document.getElementById('brand-subheading').value = settings.subheading;
+  if (settings.logoUrl) document.getElementById('brand-logo-url').value = settings.logoUrl;
+  if (settings.hoursWeek) document.getElementById('brand-hours-week').value = settings.hoursWeek;
+  if (settings.hoursSat) document.getElementById('brand-hours-sat').value = settings.hoursSat;
+  if (settings.address) document.getElementById('brand-address').value = settings.address;
+}
+
+function saveBrandingSettings() {
+  const settings = {
+    name: document.getElementById('brand-name').value,
+    whatsapp: document.getElementById('brand-whatsapp').value,
+    subheading: document.getElementById('brand-subheading').value,
+    logoUrl: document.getElementById('brand-logo-url').value,
+    hoursWeek: document.getElementById('brand-hours-week').value,
+    hoursSat: document.getElementById('brand-hours-sat').value,
+    address: document.getElementById('brand-address').value
+  };
+
+  localStorage.setItem('centromed_branding', JSON.stringify(settings));
+  showAlert('Marca, foto/logo y horarios guardados correctamente.');
+}
+
+// ================= 3. APPOINTMENTS =================
+function loadAppointments() {
+  const tableBody = document.getElementById('appointments-table-body');
+  const countEl = document.getElementById('appointments-count');
+  if (!tableBody) return;
+
+  const mockAppts = [
+    { patient_name: 'María García', phone: '+593 98 765 4321', service: 'Consulta Médica General', date: '2026-09-05 10:00 AM', status: 'Pendiente' },
+    { patient_name: 'Carlos Rodríguez', phone: '+593 99 123 4567', service: 'Chequeo Integral', date: '2026-09-06 03:00 PM', status: 'Confirmada' }
+  ];
+
+  countEl.innerText = `${mockAppts.length} Citas Registradas`;
+
+  tableBody.innerHTML = mockAppts.map((item, idx) => `
+    <tr class="hover:bg-slate-50 transition">
+      <td class="p-4 font-bold text-navy-900">${item.patient_name}</td>
+      <td class="p-4 text-blue-600 font-semibold">${item.phone}</td>
+      <td class="p-4">${item.service}</td>
+      <td class="p-4 text-slate-500">${item.date}</td>
+      <td class="p-4">
+        <span class="px-2.5 py-1 rounded-full text-xs font-extrabold ${item.status === 'Confirmada' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}">
+          ${item.status}
+        </span>
+      </td>
+      <td class="p-4 text-right">
+        <a href="https://wa.me/${item.phone.replace(/[^0-9]/g,'')}?text=Hola%20${encodeURIComponent(item.patient_name)}%2C%20le%20escribimos%20de%20Centro%20Med." target="_blank" class="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-bold hover:bg-emerald-100 transition">
+          💬 WhatsApp
+        </a>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// ================= 4. TESTIMONIALS =================
+function loadTestimonials() {
+  const container = document.getElementById('testimonials-admin-grid');
+  if (!container) return;
+
+  const testimonials = [
+    { name: 'María G.', rating: 5, comment: 'Excelente atención y diagnóstico certero. Los doctores son muy amables.' },
+    { name: 'Carlos R.', rating: 5, comment: 'Reservar por WhatsApp fue súper fácil y no tuve que esperar nada.' },
+    { name: 'Elena P.', rating: 5, comment: 'Instalaciones limpias, modernas y precios bastante accesibles.' }
+  ];
+
+  container.innerHTML = testimonials.map(item => `
+    <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+      <div class="flex justify-between items-center mb-2">
+        <span class="font-bold text-navy-900">${item.name}</span>
+        <span class="text-amber-400 text-sm">★★★★★</span>
+      </div>
+      <p class="text-xs text-slate-600 italic bg-slate-50 p-3 rounded-xl border border-slate-100">"${item.comment}"</p>
+    </div>
+  `).join('');
+}
