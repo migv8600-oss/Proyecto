@@ -1,28 +1,33 @@
 /**
- * Centro Med - Admin Panel JavaScript Logic
- * Interacts with Supabase database to provide live content, photo, logo, and price management.
+ * Centro Med - Admin Panel JavaScript Logic & Protected Authentication
  */
+
+// Unique Administrator Credentials
+const ADMIN_USER = 'admin_centromed';
+const ADMIN_PASS = 'CentroMed2026!Secured';
 
 const SUPABASE_URL = 'https://aokvisoqggsolnrttopb.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFva3Zpc29xZ2dzb2xucnR0b3BiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY5MTk0MjcsImV4cCI6MjA3MjQ5NTQyN30.placeholder';
 
-// Initialize Supabase client if library loaded
 let supabaseClient = null;
 if (typeof supabase !== 'undefined' && supabase.createClient) {
   supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 }
 
-// Global Memory State for Local Fallback & Live Sync
 let servicesData = [];
-let appointmentsData = [];
-let testimonialsData = [];
 
-// DOM Ready Init
+// DOM Init & Authentication Check
 document.addEventListener('DOMContentLoaded', () => {
-  loadBrandingSettings();
-  loadServices();
-  loadAppointments();
-  loadTestimonials();
+  checkAuthStatus();
+
+  // Login Form Submit
+  const loginForm = document.getElementById('login-form');
+  if (loginForm) {
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleLogin();
+    });
+  }
 
   // Branding Form Submit
   const brandingForm = document.getElementById('branding-form');
@@ -43,6 +48,47 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// Authentication Handler
+function checkAuthStatus() {
+  const isAuthenticated = sessionStorage.getItem('centromed_admin_auth') === 'true';
+  const loginScreen = document.getElementById('login-screen');
+  const adminApp = document.getElementById('admin-app');
+
+  if (isAuthenticated) {
+    loginScreen.classList.add('hidden');
+    adminApp.classList.remove('hidden');
+    loadBrandingSettings();
+    loadServices();
+    loadAppointments();
+    loadTestimonials();
+  } else {
+    loginScreen.classList.remove('hidden');
+    adminApp.classList.add('hidden');
+  }
+}
+
+function handleLogin() {
+  const userInput = document.getElementById('login-username').value.trim();
+  const passInput = document.getElementById('login-password').value;
+  const errorEl = document.getElementById('login-error');
+
+  if (userInput === ADMIN_USER && passInput === ADMIN_PASS) {
+    sessionStorage.setItem('centromed_admin_auth', 'true');
+    if (errorEl) errorEl.classList.add('hidden');
+    checkAuthStatus();
+  } else {
+    if (errorEl) {
+      errorEl.classList.remove('hidden');
+      errorEl.innerText = '⚠️ Usuario o contraseña incorrectos.';
+    }
+  }
+}
+
+function logoutAdmin() {
+  sessionStorage.removeItem('centromed_admin_auth');
+  checkAuthStatus();
+}
+
 // Tab Switcher
 function switchTab(tabId) {
   const tabs = ['services', 'appointments', 'testimonials', 'branding'];
@@ -60,7 +106,6 @@ function switchTab(tabId) {
     }
   });
 
-  // Update Page Title
   const titles = {
     services: 'Gestión de Servicios y Precios',
     appointments: 'Solicitudes de Citas Médicas',
@@ -87,19 +132,15 @@ async function loadServices() {
   const container = document.getElementById('services-admin-grid');
   if (!container) return;
 
-  // Try fetching from Supabase database
   if (supabaseClient) {
     try {
       const { data, error } = await supabaseClient.from('services').select('*').order('created_at', { ascending: true });
       if (!error && data && data.length > 0) {
         servicesData = data;
       }
-    } catch (err) {
-      console.log('Using local services state fallback');
-    }
+    } catch (err) {}
   }
 
-  // Fallback to default local storage if empty
   if (servicesData.length === 0) {
     const saved = localStorage.getItem('centromed_services');
     if (saved) {
@@ -116,7 +157,6 @@ async function loadServices() {
     }
   }
 
-  // Render Cards
   container.innerHTML = servicesData.map(item => `
     <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-blue-300 transition">
       <div>
@@ -202,16 +242,12 @@ async function saveService() {
     servicesData.push(updatedObj);
   }
 
-  // Persist locally
   localStorage.setItem('centromed_services', JSON.stringify(servicesData));
 
-  // Try updating Supabase
   if (supabaseClient) {
     try {
       await supabaseClient.from('services').upsert(updatedObj);
-    } catch (e) {
-      console.log('Supabase sync warning');
-    }
+    } catch (e) {}
   }
 
   closeAdminModal('service-modal');
@@ -275,7 +311,7 @@ function loadAppointments() {
 
   countEl.innerText = `${mockAppts.length} Citas Registradas`;
 
-  tableBody.innerHTML = mockAppts.map((item, idx) => `
+  tableBody.innerHTML = mockAppts.map(item => `
     <tr class="hover:bg-slate-50 transition">
       <td class="p-4 font-bold text-navy-900">${item.patient_name}</td>
       <td class="p-4 text-blue-600 font-semibold">${item.phone}</td>
