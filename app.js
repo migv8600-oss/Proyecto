@@ -1,15 +1,15 @@
 /**
- * Centro Med / Clínica Santa Lucía Aesthetic - Anti-Gravity Interactive Physics & UI Controller
+ * Centro Med - Anti-Gravity Interactive Physics Controller (Organized Floating Matrix)
  */
 
-let engine, world, runner;
+let engine, world;
 let cardBodies = [];
 let wallBodies = [];
 let mouseConstraint;
 let isGridMode = false;
 let isPhysicsInitialized = false;
 
-// Comprehensive Card Metadata Registry (Santa Lucía Aesthetic)
+// Card Metadata Registry
 const CARD_DATA = {
   'hero-card': {
     title: 'Centro Med',
@@ -28,10 +28,10 @@ const CARD_DATA = {
     price: '$30.00',
     badge: 'Consulta Preventiva',
     icon: '🩺',
-    description: 'Consulta médica integral, diagnóstico certero y tratamiento de enfermedades comunes. Chequeos preventivos y seguimiento clínico personalizado.',
+    description: 'Consulta médica integral, diagnóstico certero, chequeos preventivos y tratamientos.',
     features: ['Toma de signos vitales completos', 'Evaluación clínica preventivo', 'Receta médica digital', 'Seguimiento por especialistas'],
     ctaText: 'Agendar Medicina General ($30)',
-    waMessage: 'Hola, me gustaría solicitar una cita de Medicina General por $30.'
+    waMessage: 'Hola Centro Med, me gustaría solicitar una cita de Medicina General por $30.'
   },
   'service-2': {
     title: 'Ginecología & Obstetricia',
@@ -39,10 +39,10 @@ const CARD_DATA = {
     price: '$40.00',
     badge: 'Control Prenatal',
     icon: '🤰',
-    description: 'Atención especializada en salud femenina, control del embarazo paso a paso, ecografías de alta resolución y tratamiento de patologías ginecológicas.',
+    description: 'Atención especializada en salud femenina, control del embarazo paso a paso y ecografías obstétricas de alta resolución.',
     features: ['Control prenatal especializado', 'Ecografía pélvica y obstétrica', 'Detección temprana de patologías', 'Atención cálida y confidencial'],
     ctaText: 'Agendar Ginecología ($40)',
-    waMessage: 'Hola, deseo agendar una consulta de Ginecología y Obstetricia.'
+    waMessage: 'Hola Centro Med, deseo agendar una consulta de Ginecología y Obstetricia.'
   },
   'service-3': {
     title: 'Traumatología & Ortopedia',
@@ -50,10 +50,10 @@ const CARD_DATA = {
     price: '$45.00',
     badge: 'Atención de Traumas',
     icon: '🦴',
-    description: 'Atención especializada e integral de heridas, traumas, luxaciones y fracturas. Tratamiento del sistema músculo-esquelético con tecnología de imagen.',
+    description: 'Atención especializada e tratamiento integral de heridas, traumas, luxaciones y fracturas.',
     features: ['Evaluación de fracturas y traumas', 'Inmovilización y curaciones', 'Diagnóstico por radiología/ecografía', 'Rehabilitación y seguimiento'],
     ctaText: 'Consultar Traumatología ($45)',
-    waMessage: 'Hola, me gustaría agendar una cita en el área de Traumatología y Ortopedia.'
+    waMessage: 'Hola Centro Med, me gustaría agendar una cita en Traumatología.'
   },
   'service-4': {
     title: 'Cirugía General & Laparoscópica',
@@ -61,10 +61,10 @@ const CARD_DATA = {
     price: '$120.00',
     badge: 'Mínimamente Invasiva',
     icon: '🔪',
-    description: 'Cirugía general y laparoscópica avanzada: vesícula, apéndice, hernias, útero, ovarios, próstata, quistes y tumores con recuperación acelerada.',
+    description: 'Cirugía de vesícula, apéndice, hernias y tumores con procedimientos mínimamente invasivos.',
     features: ['Quirófanos completamente equipados', 'Procedimientos laparoscópicos', 'Cirujanos generales certificados', 'Monitoreo post-quirúrgico continuo'],
     ctaText: 'Solicitar Evaluación Quirúrgica',
-    waMessage: 'Hola, deseo información sobre los servicios de Cirugía General y Laparoscópica.'
+    waMessage: 'Hola Centro Med, deseo información sobre los servicios de Cirugía General.'
   },
   'service-5': {
     title: 'Emergencias 24 Horas',
@@ -72,10 +72,10 @@ const CARD_DATA = {
     price: 'Atención 24/7',
     badge: '🔴 Activo 24H',
     icon: '🚑',
-    description: 'Servicio de emergencias médicas y quirúrgicas disponible las 24 horas del día, los 365 días del año con respuesta inmediata.',
+    description: 'Servicio de emergencia médica y quirúrgica disponible las 24 horas del día, los 365 días del año.',
     features: ['Médicos emergenciólogos de guardia', 'Área de shock y estabilización', 'Disponibilidad de laboratorio 24H', 'Acceso directo a quirófano urgente'],
     ctaText: 'Llamar a Emergencias (0992834462)',
-    waMessage: 'URGENTE: Solicito atención inmediata de Emergencias 24H.'
+    waMessage: 'URGENTE: Solicito atención inmediata de Emergencias 24H en Centro Med.'
   },
   'service-6': {
     title: 'Laboratorio Clínico',
@@ -83,10 +83,10 @@ const CARD_DATA = {
     price: '$50.00',
     badge: 'Resultados Rápido',
     icon: '🧪',
-    description: 'Hemograma completo, glucosa, urea, creatinina, perfil lipídico, examen de orina elemental y pruebas hormonales con resultados confiables el mismo día.',
+    description: 'Hemograma completo, glucosa, urea, creatinina y orina con resultados el mismo día.',
     features: ['Procesamiento automatizado de muestras', 'Biometría e inmunología completa', 'Resultados digitales vía WhatsApp/Email', 'Toma de muestras bajo normas de bioseguridad'],
     ctaText: 'Consultar Exámenes de Laboratorio',
-    waMessage: 'Hola, quisiera información sobre los exámenes de Laboratorio Clínico.'
+    waMessage: 'Hola Centro Med, quisiera información sobre el Laboratorio Clínico.'
   },
   'service-7': {
     title: 'Internaciones & Quirófanos',
@@ -94,10 +94,10 @@ const CARD_DATA = {
     price: '$80.00 / día',
     badge: 'Confort & Seguridad',
     icon: '🛋️',
-    description: 'Habitaciones privadas y semi-privadas cómodas y totalmente equipadas para la recuperación post-quirúrgica o clínica con monitoreo de enfermería constante.',
+    description: 'Habitaciones privadas y confortables con monitoreo constante de enfermería.',
     features: ['Habitaciones con aire acondicionado y TV', 'Monitoreo de signos vitales 24H', 'Atención personalizada de enfermería', 'Visita médica diaria garantizada'],
     ctaText: 'Consultar Disponibilidad de Habitaciones',
-    waMessage: 'Hola, deseo consultar disponibilidad de habitaciones para internación.'
+    waMessage: 'Hola Centro Med, deseo consultar disponibilidad de habitaciones.'
   },
   'service-8': {
     title: 'Farmacia Interna 24H',
@@ -105,57 +105,53 @@ const CARD_DATA = {
     price: 'Stock Completo',
     badge: 'Disponibilidad Inmediata',
     icon: '💊',
-    description: 'Farmacia interna con amplio stock de medicamentos insumos y soluciones médicas con atención continua para pacientes internados y ambulantes.',
-    features: ['Amplia variedad de medicamentos de marca y genéricos', 'Atención continua las 24 horas', 'Descuentos para pacientes de consulta externa', 'Insumos quirúrgicos de alta calidad'],
+    description: 'Disponibilidad inmediata de medicamentos para pacientes hospitalizados y externos.',
+    features: ['Amplia variedad de medicamentos de marca y genéricos', 'Atención continua las 24 horas', 'Descuentos para pacientes externos', 'Insumos quirúrgicos de alta calidad'],
     ctaText: 'Consultar Medicamentos',
-    waMessage: 'Hola, me gustaría verificar la disponibilidad de un medicamento en farmacia.'
+    waMessage: 'Hola Centro Med, me gustaría verificar la disponibilidad de un medicamento.'
   },
   'testimonials-card': {
     title: 'Tradición Médica & Confianza',
     category: 'Reseñas de la Comunidad',
     price: '⭐ 4.9 / 5.0',
-    badge: '100,000+ Pacientes',
+    badge: 'Confianza Calidad',
     icon: '⭐',
-    description: 'Durante más de cuatro décadas hemos sido un pilar fundamental en la salud de miles de familias con calidad, calidez y compromiso humano.',
+    description: 'Trato humano y profesional con alta calidad clínica.',
     features: [
-      '"Excelente clínica, trato muy humano y profesional por parte de médicos y enfermeras." - Rosa M.',
-      '"Me operaron de la vesícula por laparoscopía y la recuperación fue rapidísima." - Javier L.',
-      '"Atención de emergencia limpia, rápida y muy bien equipada." - Fernando C.'
+      '"Excelente atención clínica, trato muy humano y profesional de médicos y enfermeras." - María G.',
+      '"Me operaron de la vesícula por laparoscopía y la recuperación fue rapidísima." - Javier L.'
     ],
     ctaText: 'Escribir una Opinión',
-    waMessage: 'Hola, quisiera dejar una reseña sobre la atención recibida.'
+    waMessage: 'Hola Centro Med, quisiera dejar una reseña sobre la atención.'
   },
   'contact-payments-card': {
-    title: 'Horarios de Atención & Teléfonos',
+    title: 'Horarios & Teléfonos Directos',
     category: 'Contacto Oficial',
     price: null,
     badge: 'Atención Continua',
     icon: '📞',
-    description: 'Estamos disponibles para cuidar de tu salud con atención personalizada en consulta y emergencias continuas.',
+    description: 'Estamos disponibles para cuidar de tu salud.',
     features: [
-      '🕒 Consultas: 09:00 AM - 13:00 PM | 16:00 PM - 20:00 PM',
+      '🕒 Consultas: 09:00 - 13:00 / 16:00 - 20:00',
       '🔴 Emergencias: 24 Horas / 365 Días',
-      '📞 Teléfonos fijos: (07) 293-1236 / (07) 293-3926',
-      '📱 Celulares: 0992834462 / 0992834465',
-      '💵 Medios de pago: Efectivo, Tarjetas de Crédito/Débito, Transferencia Directa'
+      '📞 Teléfonos fijos: (07) 293-1236 · 0992834462'
     ],
     ctaText: 'Contactar Central Telefónica',
-    waMessage: 'Hola, deseo comunicarme con la central telefónica de la clínica.'
+    waMessage: 'Hola Centro Med, me gustaría comunicarme con recepción.'
   },
   'gps-card': {
-    title: 'Ubicación Estratégica',
+    title: 'Ubicación Centro Med',
     category: 'Dirección Consultorio',
     price: null,
     badge: 'Fácil Acceso',
     icon: '📍',
-    description: 'Ubicados estratégicamente en las calles Sucre y Santa Rosa esquina, diagonal al Coliseo de Deportes (Machala, El Oro, Ecuador).',
+    description: 'Av. Principal de la Salud #450, Edificio Centro Med.',
     features: [
-      'Dirección: Calle Sucre y Santa Rosa esquina (Diagonal al Coliseo)',
-      'Ciudad: Machala, Provincia de El Oro, Ecuador',
-      'Rampa de accesibilidad e ingreso directo de ambulancias'
+      'Dirección: Av. Principal de la Salud #450',
+      'Frente al Parque Central / Estacionamiento privado'
     ],
     ctaText: 'Abrir en Google Maps',
-    waMessage: 'Hola, solicito la ubicación exacta en Google Maps para llegar a la clínica.'
+    waMessage: 'Hola Centro Med, solicito la ubicación exacta en Google Maps.'
   },
   'sistema-hc-card': {
     title: 'Sistema de Historias Clínicas (HC)',
@@ -163,18 +159,14 @@ const CARD_DATA = {
     price: null,
     badge: 'Acceso Digital',
     icon: '💻',
-    description: 'Acceso al sistema digital de gestión de historias clínicas para pacientes hospitalizados, quirúrgicos y de consulta externa.',
-    features: [
-      'Consulta de resultados de laboratorio online',
-      'Acceso a informes quirúrgicos y ecográficos',
-      'Seguridad y confidencialidad garantizada'
-    ],
+    description: 'Acceso al sistema digital de historias clínicas para pacientes.',
+    features: ['Consulta de exámenes online', 'Acceso seguro y confidencial'],
     ctaText: 'Ingresar al Sistema HC',
-    waMessage: 'Hola, me gustaría solicitar acceso a mis historias clínicas digitales.'
+    waMessage: 'Hola Centro Med, me gustaría solicitar acceso a mis historias clínicas.'
   }
 };
 
-// Initialize Matter.js Physics Engine
+// Initialize Symmetrical Floating Grid Physics
 function initPhysics() {
   if (typeof Matter === 'undefined') return;
 
@@ -183,49 +175,59 @@ function initPhysics() {
 
   const { Engine, World, Bodies, Body, Mouse, MouseConstraint, Vector } = Matter;
 
-  engine = Engine.create({ gravity: { x: 0, y: 0, scale: 0.001 } });
+  engine = Engine.create({ gravity: { x: 0, y: 0, scale: 0.0005 } });
   world = engine.world;
 
   const width = window.innerWidth;
   const height = window.innerHeight;
   const wallThickness = 120;
 
+  // Boundary walls
   wallBodies = [
-    Bodies.rectangle(width / 2, -wallThickness / 2, width * 2, wallThickness, { isStatic: true, restitution: 0.9 }),
-    Bodies.rectangle(width / 2, height + wallThickness / 2, width * 2, wallThickness, { isStatic: true, restitution: 0.9 }),
-    Bodies.rectangle(-wallThickness / 2, height / 2, wallThickness, height * 2, { isStatic: true, restitution: 0.9 }),
-    Bodies.rectangle(width + wallThickness / 2, height / 2, wallThickness, height * 2, { isStatic: true, restitution: 0.9 })
+    Bodies.rectangle(width / 2, -wallThickness / 2, width * 2, wallThickness, { isStatic: true, restitution: 0.8 }),
+    Bodies.rectangle(width / 2, height + wallThickness / 2, width * 2, wallThickness, { isStatic: true, restitution: 0.8 }),
+    Bodies.rectangle(-wallThickness / 2, height / 2, wallThickness, height * 2, { isStatic: true, restitution: 0.8 }),
+    Bodies.rectangle(width + wallThickness / 2, height / 2, wallThickness, height * 2, { isStatic: true, restitution: 0.8 })
   ];
   World.add(world, wallBodies);
 
   const cards = Array.from(document.querySelectorAll('.physics-card'));
   cardBodies = [];
 
-  const paddingX = Math.min(80, width * 0.08);
-  const paddingY = 90;
-  const availableW = Math.max(300, width - paddingX * 2);
-  const availableH = Math.max(300, height - paddingY - 120);
+  // Calculate Symmetrical Floating Grid Slot Positions (Organized Matrix)
+  const cols = width < 768 ? 1 : (width < 1280 ? 3 : 4);
+  const paddingX = width < 768 ? 20 : 60;
+  const startY = width < 768 ? 110 : 130;
+  const cellW = (width - paddingX * 2) / cols;
+  const cellH = 220;
 
-  cards.forEach((cardEl) => {
+  cards.forEach((cardEl, idx) => {
+    const colIdx = idx % cols;
+    const rowIdx = Math.floor(idx / cols);
+
+    const slotX = paddingX + (colIdx * cellW) + (cellW / 2);
+    const slotY = startY + (rowIdx * cellH) + 90;
+
     const rect = cardEl.getBoundingClientRect();
-    const cardW = rect.width || 320;
-    const cardH = rect.height || 190;
+    const cardW = rect.width || 310;
+    const cardH = rect.height || 185;
 
-    const startX = paddingX + (Math.random() * (availableW - cardW)) + cardW / 2;
-    const startY = paddingY + (Math.random() * (availableH - cardH)) + cardH / 2;
-
-    const body = Bodies.rectangle(startX, startY, cardW, cardH, {
-      frictionAir: 0.015,
-      friction: 0.1,
-      restitution: 0.85,
+    // Create stable levitating rigid body
+    const body = Bodies.rectangle(slotX, slotY, cardW, cardH, {
+      frictionAir: 0.035, // High air damping for smooth levitation without chaotic spinning
+      friction: 0.15,
+      restitution: 0.4,   // Soft bounce on impact
       chamfer: { radius: 18 }
     });
 
+    // Save target origin slot for organized re-centering
+    body.targetSlot = { x: slotX, y: slotY };
+
+    // Gentle micro-impulse
     Body.setVelocity(body, {
-      x: (Math.random() - 0.5) * 3.5,
-      y: (Math.random() - 0.5) * 3.5
+      x: (Math.random() - 0.5) * 1.2,
+      y: (Math.random() - 0.5) * 1.2
     });
-    Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.03);
 
     body.domElement = cardEl;
     cardEl.matterBody = body;
@@ -233,10 +235,11 @@ function initPhysics() {
     World.add(world, body);
   });
 
+  // Mouse drag constraint
   const mouse = Mouse.create(container);
   mouseConstraint = MouseConstraint.create(engine, {
     mouse: mouse,
-    constraint: { stiffness: 0.15, damping: 0.1, render: { visible: false } }
+    constraint: { stiffness: 0.2, damping: 0.15, render: { visible: false } }
   });
   World.add(world, mouseConstraint);
 
@@ -256,15 +259,23 @@ function initPhysics() {
           const halfW = rect.width / 2;
           const halfH = rect.height / 2;
 
+          // Smooth levitation spring towards target slot if low speed
           const speed = Vector.magnitude(body.velocity);
-          if (speed < 0.2) {
+          if (speed < 0.15 && body.targetSlot) {
+            const dx = body.targetSlot.x - x;
+            const dy = body.targetSlot.y - y;
             Body.applyForce(body, body.position, {
-              x: (Math.random() - 0.5) * 0.0003,
-              y: (Math.random() - 0.5) * 0.0003
+              x: dx * 0.00008,
+              y: dy * 0.00008
             });
           }
 
-          body.domElement.style.transform = `translate3d(${x - halfW}px, ${y - halfH}px, 0px) rotate(${angle}rad)`;
+          // Limit excessive rotation to keep cards upright and readable
+          if (Math.abs(angle) > 0.15) {
+            Body.setAngularVelocity(body, -angle * 0.05);
+          }
+
+          body.domElement.style.transform = `translate3d(${x - halfW}px, ${y - halfH}px, 0px) rotate(${angle * 0.4}rad)`;
         }
       });
     }
@@ -276,6 +287,7 @@ function initPhysics() {
   isPhysicsInitialized = true;
 }
 
+// Window resize handler
 window.addEventListener('resize', () => {
   if (!engine || isGridMode) return;
   const { Bodies, Body } = Matter;
@@ -291,6 +303,7 @@ window.addEventListener('resize', () => {
   }
 });
 
+// View mode toggler
 function toggleViewMode(targetMode) {
   const container = document.getElementById('physics-container');
   const btnZeroG = document.getElementById('btn-zerog');
@@ -327,7 +340,7 @@ function toggleViewMode(targetMode) {
       }
     });
 
-    shakeCards();
+    organizeMatrix();
 
     btnGrid.classList.remove('bg-[#134074]', 'text-white');
     btnGrid.classList.add('text-slate-300', 'hover:text-white');
@@ -337,15 +350,29 @@ function toggleViewMode(targetMode) {
   }
 }
 
+// Organize Matrix: Smoothly guide cards back to symmetrical levitation slots
+function organizeMatrix() {
+  if (isGridMode || !Matter) return;
+  const { Body } = Matter;
+
+  cardBodies.forEach(body => {
+    if (body.targetSlot) {
+      Body.setPosition(body, { x: body.targetSlot.x, y: body.targetSlot.y });
+      Body.setVelocity(body, { x: (Math.random() - 0.5) * 1.5, y: (Math.random() - 0.5) * 1.5 });
+      Body.setAngle(body, 0);
+      Body.setAngularVelocity(body, 0);
+    }
+  });
+}
+
 function shakeCards() {
   if (isGridMode || !Matter) return;
   const { Body } = Matter;
   cardBodies.forEach(body => {
     Body.setVelocity(body, {
-      x: (Math.random() - 0.5) * 12,
-      y: (Math.random() - 0.5) * 12
+      x: (Math.random() - 0.5) * 8,
+      y: (Math.random() - 0.5) * 8
     });
-    Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.15);
   });
 }
 
@@ -438,7 +465,6 @@ function applyDynamicBrandingAndServices() {
     document.body.classList.add('text-slate-100');
     document.body.classList.remove('text-slate-800');
   } else {
-    // Default Santa Lucía Deep Navy & Royal Blue
     root.style.setProperty('--primary-navy', '#0B2545');
     root.style.setProperty('--primary-blue', '#134074');
     root.style.setProperty('--bg-medical', '#EEF4F8');
@@ -460,7 +486,7 @@ function applyDynamicBrandingAndServices() {
   }
   if (branding.whatsapp) {
     document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
-      link.href = `https://wa.me/${branding.whatsapp}?text=Hola%20${encodeURIComponent(branding.name || 'Centro Med Santa Lucía')}%2C%20quisiera%20agendar%20una%20cita`;
+      link.href = `https://wa.me/${branding.whatsapp}?text=Hola%20${encodeURIComponent(branding.name || 'Centro Med')}%2C%20quisiera%20agendar%20una%20cita`;
     });
   }
 

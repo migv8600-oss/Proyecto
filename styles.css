@@ -1,4 +1,4 @@
-/* Custom Styles for Centro Med / Santa Lucía Aesthetic - Anti-Gravity UI */
+/* Custom Styles for Centro Med - Anti-Gravity UI (Organized & Modern) */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Outfit:wght@400;600;700;800&display=swap');
 
 :root {
@@ -21,30 +21,52 @@ body {
   -webkit-user-select: none;
 }
 
-/* Glassmorphism & Santa Lucía Navbar */
+/* Ambient Background Radial Glows */
+.bg-ambient-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.18;
+  pointer-events: none;
+}
+.glow-blue {
+  top: -100px;
+  left: 10%;
+  background: radial-gradient(circle, #134074 0%, rgba(19,64,116,0) 70%);
+}
+.glow-emerald {
+  bottom: 0;
+  right: 10%;
+  background: radial-gradient(circle, #059669 0%, rgba(5,150,105,0) 70%);
+}
+
+/* Glassmorphism Navbar */
 .glass-nav {
-  background: rgba(11, 37, 69, 0.95);
+  background: rgba(11, 37, 69, 0.96);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   color: #FFFFFF;
 }
 
+/* Glassmorphism Cards */
 .glass-card {
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(203, 213, 225, 0.8);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(203, 213, 225, 0.85);
 }
 
 .glass-control {
-  background: rgba(11, 37, 69, 0.92);
+  background: rgba(11, 37, 69, 0.94);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Floating Physics Cards */
+/* Floating Physics Cards (Organized levitation effect) */
 .physics-card {
   position: absolute;
   top: 0;
@@ -52,15 +74,33 @@ body {
   will-change: transform;
   touch-action: none;
   cursor: grab;
-  box-shadow: 0 12px 30px -5px rgba(11, 37, 69, 0.12), 0 8px 12px -6px rgba(11, 37, 69, 0.08);
+  box-shadow: 0 10px 25px -5px rgba(11, 37, 69, 0.08), 0 8px 10px -6px rgba(11, 37, 69, 0.04);
   transition: box-shadow 0.25s ease, border-color 0.25s ease;
   border-radius: var(--card-radius);
 }
 
+.physics-card:hover {
+  box-shadow: 0 20px 35px -5px rgba(19, 64, 116, 0.22);
+  border-color: rgba(19, 64, 116, 0.4);
+}
+
 .physics-card:active {
   cursor: grabbing;
-  box-shadow: 0 20px 40px -5px rgba(19, 64, 116, 0.3);
-  border-color: rgba(19, 64, 116, 0.5);
+  box-shadow: 0 25px 45px -5px rgba(19, 64, 116, 0.35);
+  border-color: rgba(19, 64, 116, 0.6);
+}
+
+/* Hero Card Highlight */
+.hero-glass-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(240,249,255,0.96) 100%);
+  border: 2px solid rgba(19, 64, 116, 0.2);
+  box-shadow: 0 15px 35px -5px rgba(11, 37, 69, 0.15);
+}
+
+/* Emergency Card Highlight */
+.emergency-card-highlight {
+  background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,241,242,0.95) 100%);
+  border: 2px solid rgba(225, 29, 72, 0.3);
 }
 
 /* Grid Mode Layout */
@@ -68,7 +108,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
   gap: 1.5rem;
-  padding: 6rem 1.5rem 8rem 1.5rem;
+  padding: 7rem 1.5rem 8rem 1.5rem;
   max-width: 1280px;
   margin: 0 auto;
 }
@@ -95,7 +135,7 @@ body {
   background-size: 28px 28px;
 }
 
-/* Emergency Badge Pulse */
+/* Emergency Badge Pulse Animation */
 @keyframes pulse-emergency {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.85; transform: scale(1.05); }
