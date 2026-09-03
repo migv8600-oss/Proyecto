@@ -1,5 +1,5 @@
 /**
- * Centro Med - Admin Panel JavaScript Logic & Theme Design Editor
+ * Centro Med - Admin Panel JavaScript Logic & Protected Authentication
  */
 
 const ADMIN_USER = 'admin_centromed';
@@ -106,21 +106,21 @@ function switchTab(tabId) {
     const btn = document.getElementById(`tab-btn-${t}`);
     if (t === tabId) {
       section.classList.remove('hidden');
-      btn.classList.add('bg-clinical-blue', 'text-white', 'shadow-md');
+      btn.classList.add('bg-[#134074]', 'text-white', 'shadow-md');
       btn.classList.remove('text-slate-300');
     } else {
       section.classList.add('hidden');
-      btn.classList.remove('bg-clinical-blue', 'text-white', 'shadow-md');
+      btn.classList.remove('bg-[#134074]', 'text-white', 'shadow-md');
       btn.classList.add('text-slate-300');
     }
   });
 
   const titles = {
-    services: 'Gestión de Servicios y Precios',
+    services: 'Gestión de Servicios & Especialidades Médicas',
     theme: '🎨 Editor de Aspecto Visual & Tema',
     appointments: 'Solicitudes de Citas Médicas',
-    testimonials: 'Testimonios & Opiniones de Pacientes',
-    branding: 'Configuración de Marca, Fotos & Datos'
+    testimonials: 'Testimonios & Reseñas de Pacientes',
+    branding: 'Configuración de Marca Centro Med, Fotos & Datos'
   };
   const titleEl = document.getElementById('page-title');
   if (titleEl && titles[tabId]) titleEl.innerText = titles[tabId];
@@ -159,7 +159,7 @@ function saveThemeSettings() {
 
   const themeConfig = { palette, font, radius, defaultMode, glass };
   localStorage.setItem('centromed_theme', JSON.stringify(themeConfig));
-  showAlert('Nuevo diseño visual aplicado correctamente. Abre la página pública para ver los cambios.');
+  showAlert('Nuevo diseño visual aplicado a Centro Med. Abre la página pública para ver los cambios.');
 }
 
 // ================= SERVICES MANAGEMENT =================
@@ -182,12 +182,14 @@ async function loadServices() {
       servicesData = JSON.parse(saved);
     } else {
       servicesData = [
-        { card_id: 'service-1', title: 'Consulta Médica General', category: 'Medicina General', price: 30.00, badge: 'Popular', icon: '🩺', description: 'Evaluación clínica completa, toma de signos vitales y diagnóstico preventivo.' },
-        { card_id: 'service-2', title: 'Chequeo Médico Integral', category: 'Medicina Preventiva', price: 75.00, badge: 'Recomendado', icon: '📊', description: 'Perfil completo de exámenes clínicos preventivos y valoración.' },
-        { card_id: 'service-3', title: 'Electrocardiograma (ECG)', category: 'Cardiología', price: 45.00, badge: 'Diagnóstico Rápido', icon: '❤️', description: 'Estudio de la actividad eléctrica del corazón para detectar arritmias.' },
-        { card_id: 'service-4', title: 'Pediatría y Neonatología', category: 'Atención Infantil', price: 35.00, badge: 'Cuidado Infantil', icon: '👶', description: 'Control de crecimiento, vacunas y atención especializada infantil.' },
-        { card_id: 'service-5', title: 'Laboratorio Clínico', category: 'Diagnósticos', price: 50.00, badge: 'Resultados el Mismo Día', icon: '🧪', description: 'Análisis de sangre y muestras con entregas el mismo día.' },
-        { card_id: 'service-6', title: 'Odontología Especializada', category: 'Salud Oral', price: 40.00, badge: 'Estética Dental', icon: '🦷', description: 'Limpieza ultrasónica, profilaxis dental y diseño de sonrisa.' }
+        { card_id: 'service-1', title: 'Medicina General', category: 'Atención Integral', price: 30.00, badge: 'Consulta Preventiva', icon: '🩺', description: 'Consulta médica integral, diagnóstico certero, chequeos preventivos y tratamientos.' },
+        { card_id: 'service-2', title: 'Ginecología & Obstetricia', category: 'Salud Femenina', price: 40.00, badge: 'Control Prenatal', icon: '🤰', description: 'Atención especializada en salud femenina, control del embarazo y ecografías.' },
+        { card_id: 'service-3', title: 'Traumatología & Ortopedia', category: 'Especialidad Médica', price: 45.00, badge: 'Atención de Traumas', icon: '🦴', description: 'Tratamiento integral de heridas, traumas, luxaciones y fracturas.' },
+        { card_id: 'service-4', title: 'Cirugía General & Laparoscópica', category: 'Quirófano Especializado', price: 120.00, badge: 'Mínimamente Invasiva', icon: '🔪', description: 'Cirugía de vesícula, apéndice, hernias y tumores con procedimientos avanzados.' },
+        { card_id: 'service-5', title: 'Emergencias 24 Horas', category: 'Atención Inmediata 24/7', price: 0.00, badge: '🔴 Activo 24H', icon: '🚑', description: 'Servicio de emergencia médica y quirúrgica disponible las 24 horas del día.' },
+        { card_id: 'service-6', title: 'Laboratorio Clínico', category: 'Diagnósticos Automatizados', price: 50.00, badge: 'Resultados Rápido', icon: '🧪', description: 'Hemograma completo, glucosa, urea, creatinina y orina el mismo día.' },
+        { card_id: 'service-7', title: 'Internaciones & Quirófanos', category: 'Hospitalización', price: 80.00, badge: 'Confort & Seguridad', icon: '🛋️', description: 'Habitaciones privadas confortables con monitoreo constante de enfermería.' },
+        { card_id: 'service-8', title: 'Farmacia Interna 24H', category: 'Servicios Complementarios', price: 0.00, badge: 'Disponibilidad Inmediata', icon: '💊', description: 'Disponibilidad inmediata de medicamentos para pacientes internados y externos.' }
       ];
     }
   }
@@ -196,18 +198,20 @@ async function loadServices() {
     <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between hover:border-blue-300 transition">
       <div>
         <div class="flex items-center justify-between mb-3">
-          <div class="w-10 h-10 rounded-xl bg-blue-50 text-clinical-blue flex items-center justify-center text-xl font-bold">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 text-[#134074] flex items-center justify-center text-xl font-bold">
             ${item.icon || '🩺'}
           </div>
-          <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$${parseFloat(item.price).toFixed(2)}</span>
+          <span class="px-2.5 py-1 rounded-full text-xs font-extrabold ${item.price > 0 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-blue-50 text-[#134074] border border-blue-200'}">
+            ${item.price > 0 ? '$' + parseFloat(item.price).toFixed(2) : 'Servicio 24H'}
+          </span>
         </div>
         <span class="text-[11px] uppercase font-bold text-slate-400 tracking-wider">${item.category}</span>
-        <h4 class="text-base font-extrabold text-navy-900 mb-2">${item.title}</h4>
+        <h4 class="text-base font-extrabold text-[#0B2545] mb-2">${item.title}</h4>
         <p class="text-xs text-slate-500 mb-4 line-clamp-3">${item.description}</p>
       </div>
 
       <div class="flex items-center justify-between border-t border-slate-100 pt-3">
-        <button onclick="editService('${item.card_id}')" class="px-3 py-1.5 rounded-lg bg-blue-50 text-clinical-blue font-bold text-xs hover:bg-blue-100 transition">
+        <button onclick="editService('${item.card_id}')" class="px-3 py-1.5 rounded-lg bg-blue-50 text-[#134074] font-bold text-xs hover:bg-blue-100 transition">
           ✏️ Editar
         </button>
         <button onclick="deleteService('${item.card_id}')" class="px-3 py-1.5 rounded-lg bg-rose-50 text-rose-600 font-bold text-xs hover:bg-rose-100 transition">
@@ -226,7 +230,7 @@ function openNewServiceModal() {
   document.getElementById('input-icon').value = '🩺';
   document.getElementById('input-badge').value = 'Nuevo';
   document.getElementById('input-description').value = '';
-  document.getElementById('modal-service-title').innerText = 'Agregar Nuevo Servicio Médico';
+  document.getElementById('modal-service-title').innerText = 'Agregar Nuevo Servicio Médico a Centro Med';
 
   const modal = document.getElementById('service-modal');
   modal.classList.remove('hidden');
@@ -287,7 +291,7 @@ async function saveService() {
 
   closeAdminModal('service-modal');
   loadServices();
-  showAlert('Servicio guardado exitosamente. Los cambios están visibles en la página web.');
+  showAlert('Servicio guardado exitosamente en Centro Med. Los cambios están visibles en la página web.');
 }
 
 async function deleteService(cardId) {
@@ -330,7 +334,7 @@ function saveBrandingSettings() {
   };
 
   localStorage.setItem('centromed_branding', JSON.stringify(settings));
-  showAlert('Marca, foto/logo y horarios guardados correctamente.');
+  showAlert('Marca Centro Med, foto/logo y horarios guardados correctamente.');
 }
 
 // ================= APPOINTMENTS =================
@@ -340,15 +344,15 @@ function loadAppointments() {
   if (!tableBody) return;
 
   const mockAppts = [
-    { patient_name: 'María García', phone: '+593 98 765 4321', service: 'Consulta Médica General', date: '2026-09-05 10:00 AM', status: 'Pendiente' },
-    { patient_name: 'Carlos Rodríguez', phone: '+593 99 123 4567', service: 'Chequeo Integral', date: '2026-09-06 03:00 PM', status: 'Confirmada' }
+    { patient_name: 'María García', phone: '+593 98 765 4321', service: 'Medicina General', date: '2026-09-05 10:00 AM', status: 'Pendiente' },
+    { patient_name: 'Carlos Rodríguez', phone: '+593 99 123 4567', service: 'Cirugía General & Laparoscópica', date: '2026-09-06 03:00 PM', status: 'Confirmada' }
   ];
 
   countEl.innerText = `${mockAppts.length} Citas Registradas`;
 
   tableBody.innerHTML = mockAppts.map(item => `
     <tr class="hover:bg-slate-50 transition">
-      <td class="p-4 font-bold text-navy-900">${item.patient_name}</td>
+      <td class="p-4 font-bold text-[#0B2545]">${item.patient_name}</td>
       <td class="p-4 text-blue-600 font-semibold">${item.phone}</td>
       <td class="p-4">${item.service}</td>
       <td class="p-4 text-slate-500">${item.date}</td>
@@ -372,15 +376,15 @@ function loadTestimonials() {
   if (!container) return;
 
   const testimonials = [
-    { name: 'María G.', rating: 5, comment: 'Excelente atención y diagnóstico certero. Los doctores son muy amables.' },
-    { name: 'Carlos R.', rating: 5, comment: 'Reservar por WhatsApp fue súper fácil y no tuve que esperar nada.' },
-    { name: 'Elena P.', rating: 5, comment: 'Instalaciones limpias, modernas y precios bastante accesibles.' }
+    { name: 'María G.', rating: 5, comment: 'Excelente atención clínica, trato muy humano y profesional por parte de médicos y enfermeras de Centro Med.' },
+    { name: 'Javier L.', rating: 5, comment: 'Me operaron de la vesícula por laparoscopía y la recuperación fue rapidísima.' },
+    { name: 'Fernando C.', rating: 5, comment: 'Atención de emergencia limpia, rápida y muy bien equipada las 24 horas.' }
   ];
 
   container.innerHTML = testimonials.map(item => `
     <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
       <div class="flex justify-between items-center mb-2">
-        <span class="font-bold text-navy-900">${item.name}</span>
+        <span class="font-bold text-[#0B2545]">${item.name}</span>
         <span class="text-amber-400 text-sm">★★★★★</span>
       </div>
       <p class="text-xs text-slate-600 italic bg-slate-50 p-3 rounded-xl border border-slate-100">"${item.comment}"</p>
