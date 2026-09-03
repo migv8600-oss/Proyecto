@@ -483,8 +483,8 @@ async function applyDynamicBrandingAndServices() {
     document.body.classList.add('text-slate-100');
     document.body.classList.remove('text-slate-800');
   } else {
-    root.style.setProperty('--primary-navy', '#0B2545');
-    root.style.setProperty('--primary-blue', '#134074');
+    root.style.setProperty('--primary-navy', '#0A2540');
+    root.style.setProperty('--primary-blue', '#0066FF');
     root.style.setProperty('--bg-medical', '#EEF4F8');
   }
 

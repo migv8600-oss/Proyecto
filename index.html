@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Centro Med | Consulta Médica Integral & Antigravedad</title>
+  <title>Centro Med | Consultorio Médico & Salud Integral</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,16 +21,16 @@
         extend: {
           colors: {
             navy: {
-              800: '#134074',
-              900: '#0B2545',
+              800: '#0B1E36',
+              900: '#0A2540',
             },
             clinical: {
-              blue: '#134074',
+              blue: '#0066FF',
               light: '#EEF4F8',
             },
             whatsapp: {
-              DEFAULT: '#22C55E',
-              hover: '#16A34A',
+              DEFAULT: '#25D366',
+              hover: '#1EBE5B',
             }
           }
         }
@@ -50,18 +50,18 @@
   <div class="bg-ambient-glow glow-blue"></div>
   <div class="bg-ambient-glow glow-emerald"></div>
 
-  <!-- ================= FIXED TOP NAVBAR ================= -->
-  <nav class="fixed top-0 left-0 right-0 z-50 glass-nav shadow-lg transition-all duration-300">
+  <!-- ================= FIXED TOP NAVBAR (DARK NAVY BLUE) ================= -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-nav shadow-xl transition-all duration-300">
     <!-- Top Contact Strip -->
-    <div class="bg-navy-900/90 text-slate-300 text-[11px] py-1 px-4 border-b border-white/10 hidden sm:block">
+    <div class="bg-[#081B33] text-slate-300 text-[11px] py-1.5 px-4 border-b border-white/10 hidden sm:block">
       <div class="max-w-7xl mx-auto flex justify-between items-center font-medium">
         <div class="flex items-center gap-6">
           <span>📍 Av. Principal de la Salud #450, Edificio Centro Med</span>
           <span>🔴 Emergencias 24 Horas: <strong class="text-white font-bold">0992834462</strong></span>
         </div>
         <div class="flex items-center gap-4 text-white font-bold">
-          <a href="tel:072931236" class="hover:text-blue-300 transition">📞 (07) 293-1236</a>
-          <a href="tel:0992834465" class="hover:text-blue-300 transition">📱 0992834465</a>
+          <a href="tel:072931236" class="hover:text-cyan-300 transition">📞 (07) 293-1236</a>
+          <a href="tel:0992834465" class="hover:text-cyan-300 transition">📱 0992834465</a>
         </div>
       </div>
     </div>
@@ -70,12 +70,12 @@
       
       <!-- Brand Logo -->
       <a href="#" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-blue-700 to-emerald-500 text-white flex items-center justify-center font-black text-xl shadow-lg group-hover:scale-105 transition-transform">
+        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 text-white flex items-center justify-center font-black text-xl shadow-lg group-hover:scale-105 transition-transform">
           🏥
         </div>
         <div>
-          <span class="text-lg sm:text-xl font-black text-white tracking-tight block leading-none brand-name-text">Centro Med</span>
-          <span class="text-[10px] font-bold text-blue-300 tracking-wider uppercase">Consultorio Médico & Salud Integral</span>
+          <span class="text-lg sm:text-2xl font-black text-white tracking-tight block leading-none brand-name-text">Centro Med</span>
+          <span class="text-[10px] font-bold text-cyan-300 tracking-wider uppercase">Consultorio Médico & Salud Integral</span>
         </div>
       </a>
 
@@ -101,13 +101,13 @@
 
       <!-- Actions Right -->
       <div class="flex items-center gap-3">
-        <!-- Direct Phone CTA -->
-        <a href="tel:0992834462" class="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition">
+        <!-- Direct Phone CTA Button -->
+        <a href="tel:0992834462" class="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition border border-white/15">
           📞 0992834462
         </a>
 
-        <!-- WhatsApp Direct CTA -->
-        <a href="https://wa.me/5930992834462?text=Hola%20Centro%20Med%2C%20quisiera%20agendar%20una%20consulta%20m%C3%A9dica" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-whatsapp hover:bg-whatsapp-hover text-white text-xs sm:text-sm font-extrabold flex items-center gap-2 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition hover:scale-[1.02] active:scale-95">
+        <!-- WhatsApp Direct CTA Button -->
+        <a href="https://wa.me/5930992834462?text=Hola%20Centro%20Med%2C%20quisiera%20agendar%20una%20consulta%20m%C3%A9dica" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-whatsapp hover:bg-whatsapp-hover text-white text-xs sm:text-sm font-extrabold flex items-center gap-2 shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/45 transition hover:scale-[1.02] active:scale-95">
           <svg class="w-4 h-4 sm:w-5 sm:h-5 fill-current" viewBox="0 0 24 24">
             <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.705 1.754zm6.097-4.908l.389.231c1.55.922 3.33 1.409 5.15 1.41h.005c5.361 0 9.722-4.36 9.725-9.723.001-2.601-1.01-5.047-2.85-6.888-1.839-1.84-4.285-2.852-6.889-2.852-5.362 0-9.723 4.361-9.726 9.724-.001 1.944.576 3.839 1.666 5.485l.253.383-1.006 3.676 3.766-.987z"/>
           </svg>
@@ -124,20 +124,20 @@
     <!-- 1. HERO CARD -->
     <div id="hero-card" data-card-id="hero-card" class="physics-card glass-card rounded-3xl p-6 sm:p-8 w-80 sm:w-96 border border-slate-200/90 shadow-2xl">
       <div class="flex items-center justify-between mb-4">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-blue-50 text-[#134074] border border-blue-100 emergency-pulse">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-blue-50 text-[#0A2540] border border-blue-100 emergency-pulse">
           <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
           Consultorio Médico Integral
         </span>
-        <span class="text-2xl">🏥</span>
+        <span class="text-2xl">🏩</span>
       </div>
-      <h1 class="text-2xl sm:text-3xl font-black text-[#0B2545] tracking-tight leading-tight mb-2 brand-name-text">
+      <h1 class="text-2xl sm:text-3xl font-black text-[#0A2540] tracking-tight leading-tight mb-2 brand-name-text">
         Centro Med
       </h1>
       <p class="text-xs sm:text-sm text-slate-600 mb-6 leading-relaxed">
         Atención médica especializada con tecnología avanzada y profesionales comprometidos con tu bienestar. Toca o arrastra cualquier tarjeta en Antigravedad.
       </p>
       <div class="flex flex-col gap-2.5">
-        <button class="w-full py-3 px-4 bg-[#0B2545] hover:bg-[#134074] text-white rounded-xl font-bold text-sm shadow-md transition flex items-center justify-center gap-2">
+        <button class="w-full py-3 px-4 bg-[#0A2540] hover:bg-[#0B1E36] text-white rounded-xl font-bold text-sm shadow-md transition flex items-center justify-center gap-2">
           <span>Ver Especialidades & Quirófanos</span>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
         </button>
@@ -147,12 +147,12 @@
     <!-- 2. SERVICE CARD 1: Medicina General -->
     <div id="service-1" data-card-id="service-1" class="physics-card glass-card rounded-2xl p-5 w-72 sm:w-80 border border-slate-200">
       <div class="flex items-center justify-between mb-3">
-        <div class="w-10 h-10 rounded-xl bg-blue-50 text-[#134074] flex items-center justify-center text-xl font-bold">🩺</div>
+        <div class="w-10 h-10 rounded-xl bg-blue-50 text-[#0066FF] flex items-center justify-center text-xl font-bold">🩺</div>
         <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$30.00</span>
       </div>
-      <h3 class="text-base font-extrabold text-[#0B2545] mb-1">Medicina General</h3>
+      <h3 class="text-base font-extrabold text-[#0A2540] mb-1">Medicina General</h3>
       <p class="text-xs text-slate-500 mb-4 line-clamp-2">Consulta médica integral, diagnóstico certero, chequeos preventivos y tratamientos.</p>
-      <div class="flex items-center justify-between text-xs font-bold text-[#134074]">
+      <div class="flex items-center justify-between text-xs font-bold text-[#0066FF]">
         <span>Click para detalles</span>
         <span>→</span>
       </div>
@@ -161,12 +161,12 @@
     <!-- 3. SERVICE CARD 2: Ginecología & Obstetricia -->
     <div id="service-2" data-card-id="service-2" class="physics-card glass-card rounded-2xl p-5 w-72 sm:w-80 border border-slate-200">
       <div class="flex items-center justify-between mb-3">
-        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl font-bold">🤰</div>
+        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl font-bold">🤰</div>
         <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$40.00</span>
       </div>
-      <h3 class="text-base font-extrabold text-[#0B2545] mb-1">Ginecología & Obstetricia</h3>
+      <h3 class="text-base font-extrabold text-[#0A2540] mb-1">Ginecología & Obstetricia</h3>
       <p class="text-xs text-slate-500 mb-4 line-clamp-2">Salud femenina, control prenatal paso a paso y ecografías obstétricas de alta resolución.</p>
-      <div class="flex items-center justify-between text-xs font-bold text-[#134074]">
+      <div class="flex items-center justify-between text-xs font-bold text-[#0066FF]">
         <span>Click para detalles</span>
         <span>→</span>
       </div>
@@ -178,9 +178,9 @@
         <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl font-bold">🦴</div>
         <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$45.00</span>
       </div>
-      <h3 class="text-base font-extrabold text-[#0B2545] mb-1">Traumatología & Ortopedia</h3>
+      <h3 class="text-base font-extrabold text-[#0A2540] mb-1">Traumatología & Ortopedia</h3>
       <p class="text-xs text-slate-500 mb-4 line-clamp-2">Atención especializada e tratamiento integral de heridas, traumas y fracturas.</p>
-      <div class="flex items-center justify-between text-xs font-bold text-[#134074]">
+      <div class="flex items-center justify-between text-xs font-bold text-[#0066FF]">
         <span>Click para detalles</span>
         <span>→</span>
       </div>
@@ -192,9 +192,9 @@
         <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl font-bold">🔪</div>
         <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$120.00</span>
       </div>
-      <h3 class="text-base font-extrabold text-[#0B2545] mb-1">Cirugías & Laparoscopía</h3>
+      <h3 class="text-base font-extrabold text-[#0A2540] mb-1">Cirugías & Laparoscopía</h3>
       <p class="text-xs text-slate-500 mb-4 line-clamp-2">Cirugía de vesícula, apéndice, hernias y tumores con procedimientos mínimamente invasivos.</p>
-      <div class="flex items-center justify-between text-xs font-bold text-[#134074]">
+      <div class="flex items-center justify-between text-xs font-bold text-[#0066FF]">
         <span>Click para detalles</span>
         <span>→</span>
       </div>
@@ -206,7 +206,7 @@
         <div class="w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center text-xl font-bold shadow-md">🚑</div>
         <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-rose-600 text-white emergency-pulse">🔴 Activo 24H</span>
       </div>
-      <h3 class="text-base font-extrabold text-[#0B2545] mb-1">Emergencias 24 Horas</h3>
+      <h3 class="text-base font-extrabold text-[#0A2540] mb-1">Emergencias 24 Horas</h3>
       <p class="text-xs text-slate-600 mb-4 line-clamp-2">Servicio de emergencia médica y quirúrgica disponible las 24H los 365 días del año.</p>
       <div class="flex items-center justify-between text-xs font-extrabold text-rose-600">
         <span>Atención Inmediata</span>
@@ -220,9 +220,9 @@
         <div class="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-xl font-bold">🧪</div>
         <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$50.00</span>
       </div>
-      <h3 class="text-base font-extrabold text-[#0B2545] mb-1">Laboratorio Clínico</h3>
+      <h3 class="text-base font-extrabold text-[#0A2540] mb-1">Laboratorio Clínico</h3>
       <p class="text-xs text-slate-500 mb-4 line-clamp-2">Hemograma, glucosa, urea, creatinina y orina con resultados el mismo día.</p>
-      <div class="flex items-center justify-between text-xs font-bold text-[#134074]">
+      <div class="flex items-center justify-between text-xs font-bold text-[#0066FF]">
         <span>Click para detalles</span>
         <span>→</span>
       </div>
@@ -234,9 +234,9 @@
         <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl font-bold">🛋️</div>
         <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$80.00/día</span>
       </div>
-      <h3 class="text-base font-extrabold text-[#0B2545] mb-1">Internaciones & Confort</h3>
+      <h3 class="text-base font-extrabold text-[#0A2540] mb-1">Internaciones & Confort</h3>
       <p class="text-xs text-slate-500 mb-4 line-clamp-2">Habitaciones privadas y confortables con monitoreo constante de enfermería.</p>
-      <div class="flex items-center justify-between text-xs font-bold text-[#134074]">
+      <div class="flex items-center justify-between text-xs font-bold text-[#0066FF]">
         <span>Click para detalles</span>
         <span>→</span>
       </div>
@@ -245,12 +245,12 @@
     <!-- 9. SERVICE CARD 8: Farmacia Interna 24H -->
     <div id="service-8" data-card-id="service-8" class="physics-card glass-card rounded-2xl p-5 w-72 sm:w-80 border border-slate-200">
       <div class="flex items-center justify-between mb-3">
-        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold">💊</div>
-        <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-blue-50 text-[#134074] border border-blue-200">Stock 24H</span>
+        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-xl font-bold">💊</div>
+        <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-blue-50 text-[#0066FF] border border-blue-200">Stock 24H</span>
       </div>
-      <h3 class="text-base font-extrabold text-[#0B2545] mb-1">Farmacia Interna 24H</h3>
+      <h3 class="text-base font-extrabold text-[#0A2540] mb-1">Farmacia Interna 24H</h3>
       <p class="text-xs text-slate-500 mb-4 line-clamp-2">Disponibilidad inmediata de medicamentos para pacientes hospitalizados y externos.</p>
-      <div class="flex items-center justify-between text-xs font-bold text-[#134074]">
+      <div class="flex items-center justify-between text-xs font-bold text-[#0066FF]">
         <span>Click para detalles</span>
         <span>→</span>
       </div>
@@ -262,9 +262,9 @@
         <span class="text-xs font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">Confianza & Calidez</span>
         <div class="flex text-amber-400 text-sm font-bold">★★★★★</div>
       </div>
-      <h3 class="text-base font-extrabold text-[#0B2545] mb-2">Trato Humano: Cada Paciente es Familia</h3>
+      <h3 class="text-base font-extrabold text-[#0A2540] mb-2">Trato Humano: Cada Paciente es Familia</h3>
       <p class="text-xs italic text-slate-600 mb-3 bg-slate-50 p-3 rounded-xl border border-slate-100 leading-relaxed">
-        "Excelente atención clínica, trato muy humano y profesional por parte de médicos y enfermeras de Centro Med."
+        "Excelente atención clínica, trato muy humano y profesional de médicos y enfermeras de Centro Med."
       </p>
       <div class="flex items-center justify-between text-xs">
         <span class="font-bold text-slate-700">Pacientes Centro Med</span>
@@ -276,7 +276,7 @@
     <div id="contact-payments-card" data-card-id="contact-payments-card" class="physics-card glass-card rounded-2xl p-6 w-80 sm:w-90 border border-slate-200 shadow-lg">
       <div class="flex items-center gap-2 mb-3">
         <span class="text-xl">📞</span>
-        <h3 class="text-base font-extrabold text-[#0B2545]">Horarios & Teléfonos Directos</h3>
+        <h3 class="text-base font-extrabold text-[#0A2540]">Horarios & Teléfonos Directos</h3>
       </div>
       <div class="space-y-2 text-xs text-slate-600 mb-4">
         <p class="flex justify-between border-b border-slate-100 pb-1">
@@ -292,9 +292,9 @@
           <span>(07) 293-1236 · 0992834462</span>
         </p>
       </div>
-      <div class="bg-blue-50/80 p-2.5 rounded-xl border border-blue-100 flex items-center justify-between text-xs text-[#0B2545] font-semibold">
+      <div class="bg-blue-50/80 p-2.5 rounded-xl border border-blue-100 flex items-center justify-between text-xs text-[#0A2540] font-semibold">
         <span>Formas de Pago:</span>
-        <span class="text-[#134074]">💵 Efectivo | 💳 Tarjetas | 🏦 Transf.</span>
+        <span class="text-[#0066FF]">💵 Efectivo | 💳 Tarjetas | 🏦 Transf.</span>
       </div>
     </div>
 
@@ -303,12 +303,12 @@
       <div class="flex items-center gap-3 mb-3">
         <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-xl font-bold">📍</div>
         <div>
-          <h3 class="text-base font-extrabold text-[#0B2545]">Ubicación Centro Med</h3>
+          <h3 class="text-base font-extrabold text-[#0A2540]">Ubicación Centro Med</h3>
           <span class="text-xs text-slate-500">Av. Principal de la Salud #450</span>
         </div>
       </div>
       <p class="text-xs text-slate-600 mb-3">Frente al Parque Central. Estacionamiento privado e ingreso directo de ambulancias.</p>
-      <a href="https://maps.google.com" target="_blank" onclick="event.stopPropagation()" class="w-full py-2 px-3 bg-blue-50 hover:bg-blue-100 text-[#134074] font-bold text-xs rounded-xl flex items-center justify-center gap-2 border border-blue-200 transition">
+      <a href="https://maps.google.com" target="_blank" onclick="event.stopPropagation()" class="w-full py-2 px-3 bg-blue-50 hover:bg-blue-100 text-[#0066FF] font-bold text-xs rounded-xl flex items-center justify-center gap-2 border border-blue-200 transition">
         <span>🗺️ Abrir Dirección en Google Maps</span>
       </a>
     </div>
@@ -316,14 +316,14 @@
     <!-- 13. SISTEMA HC CARD -->
     <div id="sistema-hc-card" data-card-id="sistema-hc-card" class="physics-card glass-card rounded-2xl p-5 w-80 border border-slate-200 shadow-lg">
       <div class="flex items-center gap-3 mb-3">
-        <div class="w-10 h-10 rounded-xl bg-blue-50 text-[#134074] flex items-center justify-center text-xl font-bold">💻</div>
+        <div class="w-10 h-10 rounded-xl bg-blue-50 text-[#0066FF] flex items-center justify-center text-xl font-bold">💻</div>
         <div>
-          <h3 class="text-base font-extrabold text-[#0B2545]">Sistema de Historias Clínicas</h3>
+          <h3 class="text-base font-extrabold text-[#0A2540]">Sistema de Historias Clínicas</h3>
           <span class="text-xs text-slate-500">Portal Digital de Pacientes</span>
         </div>
       </div>
       <p class="text-xs text-slate-600 mb-3">Acceda digitalmente a sus antecedentes quirúrgicos, laboratorio y consultas.</p>
-      <button class="w-full py-2 px-3 bg-[#0B2545] hover:bg-[#134074] text-white font-bold text-xs rounded-xl transition">
+      <button class="w-full py-2 px-3 bg-[#0A2540] hover:bg-[#0B1E36] text-white font-bold text-xs rounded-xl transition">
         🔑 Acceder al Sistema HC
       </button>
     </div>
@@ -333,7 +333,7 @@
   <!-- ================= FLOATING CONTROL DOCK ================= -->
   <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 glass-control rounded-2xl p-2 flex items-center gap-2 shadow-2xl">
     <!-- Zero Gravity Mode Button -->
-    <button id="btn-zerog" onclick="toggleViewMode('zerog')" class="px-4 py-2.5 rounded-xl bg-[#134074] text-white text-xs sm:text-sm font-bold flex items-center gap-2 transition shadow-md">
+    <button id="btn-zerog" onclick="toggleViewMode('zerog')" class="px-4 py-2.5 rounded-xl bg-[#0066FF] text-white text-xs sm:text-sm font-bold flex items-center gap-2 transition shadow-md">
       <span>🌌 Gravedad 0</span>
     </button>
 

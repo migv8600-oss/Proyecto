@@ -1,14 +1,14 @@
-/* Custom Styles for Centro Med - Anti-Gravity UI (Organized & Modern) */
+/* Custom Styles for Centro Med - Exact Match to Screenshot */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Outfit:wght@400;600;700;800&display=swap');
 
 :root {
-  --primary-navy: #0B2545;
-  --primary-blue: #134074;
+  --primary-navy: #0A2540;
+  --primary-blue: #0066FF;
   --accent-gold: #D97706;
   --bg-medical: #EEF4F8;
-  --whatsapp-green: #22C55E;
-  --whatsapp-hover: #16A34A;
-  --card-radius: 1.25rem;
+  --whatsapp-green: #25D366;
+  --whatsapp-hover: #1EBE5B;
+  --card-radius: 1.5rem;
   --font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
@@ -34,39 +34,35 @@ body {
 .glow-blue {
   top: -100px;
   left: 10%;
-  background: radial-gradient(circle, #134074 0%, rgba(19,64,116,0) 70%);
+  background: radial-gradient(circle, #0A2540 0%, rgba(10,37,64,0) 70%);
 }
 .glow-emerald {
   bottom: 0;
   right: 10%;
-  background: radial-gradient(circle, #059669 0%, rgba(5,150,105,0) 70%);
+  background: radial-gradient(circle, #25D366 0%, rgba(37,211,102,0) 70%);
 }
 
-/* Glassmorphism Navbar */
+/* Fixed Top Navbar - Solid Dark Navy Blue (Exact Match) */
 .glass-nav {
-  background: rgba(11, 37, 69, 0.96);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: #0A2540 !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  color: #FFFFFF;
+  color: #FFFFFF !important;
 }
 
-/* Glassmorphism Cards */
+/* Floating Cards */
 .glass-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.98) !important;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(203, 213, 225, 0.85);
+  border: 1px solid rgba(226, 232, 240, 0.9);
 }
 
 .glass-control {
-  background: rgba(11, 37, 69, 0.94);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: #0A2540 !important;
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Floating Physics Cards (Organized levitation effect) */
+/* Floating Physics Cards */
 .physics-card {
   position: absolute;
   top: 0;
@@ -74,33 +70,20 @@ body {
   will-change: transform;
   touch-action: none;
   cursor: grab;
-  box-shadow: 0 10px 25px -5px rgba(11, 37, 69, 0.08), 0 8px 10px -6px rgba(11, 37, 69, 0.04);
+  box-shadow: 0 10px 25px -5px rgba(10, 37, 64, 0.08), 0 8px 10px -6px rgba(10, 37, 64, 0.04);
   transition: box-shadow 0.25s ease, border-color 0.25s ease;
   border-radius: var(--card-radius);
 }
 
 .physics-card:hover {
-  box-shadow: 0 20px 35px -5px rgba(19, 64, 116, 0.22);
-  border-color: rgba(19, 64, 116, 0.4);
+  box-shadow: 0 20px 35px -5px rgba(10, 37, 64, 0.2);
+  border-color: rgba(0, 102, 255, 0.3);
 }
 
 .physics-card:active {
   cursor: grabbing;
-  box-shadow: 0 25px 45px -5px rgba(19, 64, 116, 0.35);
-  border-color: rgba(19, 64, 116, 0.6);
-}
-
-/* Hero Card Highlight */
-.hero-glass-card {
-  background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(240,249,255,0.96) 100%);
-  border: 2px solid rgba(19, 64, 116, 0.2);
-  box-shadow: 0 15px 35px -5px rgba(11, 37, 69, 0.15);
-}
-
-/* Emergency Card Highlight */
-.emergency-card-highlight {
-  background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,241,242,0.95) 100%);
-  border: 2px solid rgba(225, 29, 72, 0.3);
+  box-shadow: 0 25px 45px -5px rgba(0, 102, 255, 0.3);
+  border-color: rgba(0, 102, 255, 0.5);
 }
 
 /* Grid Mode Layout */
@@ -126,7 +109,7 @@ body {
 
 .grid-mode-card:hover {
   transform: translateY(-5px) !important;
-  box-shadow: 0 18px 36px -5px rgba(19, 64, 116, 0.18);
+  box-shadow: 0 18px 36px -5px rgba(10, 37, 64, 0.15);
 }
 
 /* Background Grid Pattern */
@@ -135,7 +118,7 @@ body {
   background-size: 28px 28px;
 }
 
-/* Emergency Badge Pulse Animation */
+/* Emergency Badge Pulse */
 @keyframes pulse-emergency {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.85; transform: scale(1.05); }
