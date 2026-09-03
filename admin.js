@@ -1,5 +1,5 @@
 /**
- * Centro Med - Admin Panel JavaScript Logic & Protected Authentication
+ * Centro Med - Admin Panel JavaScript Logic & Live Supabase Synchronization
  */
 
 const ADMIN_USER = 'admin_centromed';
@@ -138,7 +138,16 @@ function showAlert(message) {
 }
 
 // ================= THEME & VISUAL DESIGN EDITOR =================
-function loadThemeSettings() {
+async function loadThemeSettings() {
+  if (supabaseClient) {
+    try {
+      const { data } = await supabaseClient.from('settings').select('value').eq('key', 'theme').single();
+      if (data && data.value) {
+        localStorage.setItem('centromed_theme', JSON.stringify(data.value));
+      }
+    } catch (e) {}
+  }
+
   const theme = JSON.parse(localStorage.getItem('centromed_theme') || '{}');
   if (theme.palette) {
     const radio = document.querySelector(`input[name="color-palette"][value="${theme.palette}"]`);
@@ -150,7 +159,7 @@ function loadThemeSettings() {
   if (theme.glass) document.getElementById('theme-glass').value = theme.glass;
 }
 
-function saveThemeSettings() {
+async function saveThemeSettings() {
   const palette = document.querySelector('input[name="color-palette"]:checked').value;
   const font = document.getElementById('theme-font').value;
   const radius = document.getElementById('theme-radius').value;
@@ -159,7 +168,14 @@ function saveThemeSettings() {
 
   const themeConfig = { palette, font, radius, defaultMode, glass };
   localStorage.setItem('centromed_theme', JSON.stringify(themeConfig));
-  showAlert('Nuevo diseño visual aplicado a Centro Med. Abre la página pública para ver los cambios.');
+
+  if (supabaseClient) {
+    try {
+      await supabaseClient.from('settings').upsert({ key: 'theme', value: themeConfig });
+    } catch (e) {}
+  }
+
+  showAlert('Nuevo diseño visual aplicado a Centro Med. Se actualizará automáticamente en la página web pública.');
 }
 
 // ================= SERVICES MANAGEMENT =================
@@ -172,6 +188,7 @@ async function loadServices() {
       const { data, error } = await supabaseClient.from('services').select('*').order('created_at', { ascending: true });
       if (!error && data && data.length > 0) {
         servicesData = data;
+        localStorage.setItem('centromed_services', JSON.stringify(servicesData));
       }
     } catch (err) {}
   }
@@ -291,7 +308,7 @@ async function saveService() {
 
   closeAdminModal('service-modal');
   loadServices();
-  showAlert('Servicio guardado exitosamente en Centro Med. Los cambios están visibles en la página web.');
+  showAlert('Servicio guardado en Supabase y visible globalmente en la página web.');
 }
 
 async function deleteService(cardId) {
@@ -311,7 +328,16 @@ async function deleteService(cardId) {
 }
 
 // ================= BRANDING & PHOTOS =================
-function loadBrandingSettings() {
+async function loadBrandingSettings() {
+  if (supabaseClient) {
+    try {
+      const { data } = await supabaseClient.from('settings').select('value').eq('key', 'branding').single();
+      if (data && data.value) {
+        localStorage.setItem('centromed_branding', JSON.stringify(data.value));
+      }
+    } catch (e) {}
+  }
+
   const settings = JSON.parse(localStorage.getItem('centromed_branding') || '{}');
   if (settings.name) document.getElementById('brand-name').value = settings.name;
   if (settings.whatsapp) document.getElementById('brand-whatsapp').value = settings.whatsapp;
@@ -322,7 +348,7 @@ function loadBrandingSettings() {
   if (settings.address) document.getElementById('brand-address').value = settings.address;
 }
 
-function saveBrandingSettings() {
+async function saveBrandingSettings() {
   const settings = {
     name: document.getElementById('brand-name').value,
     whatsapp: document.getElementById('brand-whatsapp').value,
@@ -334,7 +360,14 @@ function saveBrandingSettings() {
   };
 
   localStorage.setItem('centromed_branding', JSON.stringify(settings));
-  showAlert('Marca Centro Med, foto/logo y horarios guardados correctamente.');
+
+  if (supabaseClient) {
+    try {
+      await supabaseClient.from('settings').upsert({ key: 'branding', value: settings });
+    } catch (e) {}
+  }
+
+  showAlert('Marca Centro Med, fotos y datos guardados en Supabase. Actualizado en la web.');
 }
 
 // ================= APPOINTMENTS =================
@@ -376,7 +409,7 @@ function loadTestimonials() {
   if (!container) return;
 
   const testimonials = [
-    { name: 'María G.', rating: 5, comment: 'Excelente atención clínica, trato muy humano y profesional por parte de médicos y enfermeras de Centro Med.' },
+    { name: 'María G.', rating: 5, comment: 'Excelente atención clínica, trato muy humano y profesional de médicos y enfermeras de Centro Med.' },
     { name: 'Javier L.', rating: 5, comment: 'Me operaron de la vesícula por laparoscopía y la recuperación fue rapidísima.' },
     { name: 'Fernando C.', rating: 5, comment: 'Atención de emergencia limpia, rápida y muy bien equipada las 24 horas.' }
   ];

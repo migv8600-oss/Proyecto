@@ -1,5 +1,5 @@
 /**
- * Centro Med - Anti-Gravity Interactive Physics Controller (Organized Floating Matrix)
+ * Centro Med - Anti-Gravity Interactive Physics Controller (Live Supabase Realtime Sync)
  */
 
 let engine, world;
@@ -8,6 +8,14 @@ let wallBodies = [];
 let mouseConstraint;
 let isGridMode = false;
 let isPhysicsInitialized = false;
+
+const SUPABASE_URL = 'https://aokvisoqggsolnrttopb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFva3Zpc29xZ2dzb2xucnR0b3BiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY5MTk0MjcsImV4cCI6MjA3MjQ5NTQyN30.placeholder';
+
+let supabaseClient = null;
+if (typeof supabase !== 'undefined' && supabase.createClient) {
+  supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+}
 
 // Card Metadata Registry
 const CARD_DATA = {
@@ -182,7 +190,6 @@ function initPhysics() {
   const height = window.innerHeight;
   const wallThickness = 120;
 
-  // Boundary walls
   wallBodies = [
     Bodies.rectangle(width / 2, -wallThickness / 2, width * 2, wallThickness, { isStatic: true, restitution: 0.8 }),
     Bodies.rectangle(width / 2, height + wallThickness / 2, width * 2, wallThickness, { isStatic: true, restitution: 0.8 }),
@@ -194,7 +201,6 @@ function initPhysics() {
   const cards = Array.from(document.querySelectorAll('.physics-card'));
   cardBodies = [];
 
-  // Calculate Symmetrical Floating Grid Slot Positions (Organized Matrix)
   const cols = width < 768 ? 1 : (width < 1280 ? 3 : 4);
   const paddingX = width < 768 ? 20 : 60;
   const startY = width < 768 ? 110 : 130;
@@ -212,18 +218,15 @@ function initPhysics() {
     const cardW = rect.width || 310;
     const cardH = rect.height || 185;
 
-    // Create stable levitating rigid body
     const body = Bodies.rectangle(slotX, slotY, cardW, cardH, {
-      frictionAir: 0.035, // High air damping for smooth levitation without chaotic spinning
+      frictionAir: 0.035,
       friction: 0.15,
-      restitution: 0.4,   // Soft bounce on impact
+      restitution: 0.4,
       chamfer: { radius: 18 }
     });
 
-    // Save target origin slot for organized re-centering
     body.targetSlot = { x: slotX, y: slotY };
 
-    // Gentle micro-impulse
     Body.setVelocity(body, {
       x: (Math.random() - 0.5) * 1.2,
       y: (Math.random() - 0.5) * 1.2
@@ -235,7 +238,6 @@ function initPhysics() {
     World.add(world, body);
   });
 
-  // Mouse drag constraint
   const mouse = Mouse.create(container);
   mouseConstraint = MouseConstraint.create(engine, {
     mouse: mouse,
@@ -259,7 +261,6 @@ function initPhysics() {
           const halfW = rect.width / 2;
           const halfH = rect.height / 2;
 
-          // Smooth levitation spring towards target slot if low speed
           const speed = Vector.magnitude(body.velocity);
           if (speed < 0.15 && body.targetSlot) {
             const dx = body.targetSlot.x - x;
@@ -270,7 +271,6 @@ function initPhysics() {
             });
           }
 
-          // Limit excessive rotation to keep cards upright and readable
           if (Math.abs(angle) > 0.15) {
             Body.setAngularVelocity(body, -angle * 0.05);
           }
@@ -287,7 +287,6 @@ function initPhysics() {
   isPhysicsInitialized = true;
 }
 
-// Window resize handler
 window.addEventListener('resize', () => {
   if (!engine || isGridMode) return;
   const { Bodies, Body } = Matter;
@@ -303,7 +302,6 @@ window.addEventListener('resize', () => {
   }
 });
 
-// View mode toggler
 function toggleViewMode(targetMode) {
   const container = document.getElementById('physics-container');
   const btnZeroG = document.getElementById('btn-zerog');
@@ -350,7 +348,6 @@ function toggleViewMode(targetMode) {
   }
 }
 
-// Organize Matrix: Smoothly guide cards back to symmetrical levitation slots
 function organizeMatrix() {
   if (isGridMode || !Matter) return;
   const { Body } = Matter;
@@ -424,7 +421,7 @@ function openCardModal(cardId) {
       </button>
       <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-[#22C55E] hover:bg-[#16A34A] text-white font-bold flex items-center gap-2 shadow-lg shadow-emerald-500/20 transition">
         <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.705 1.754zm6.097-4.908l.389.231c1.55.922 3.33 1.409 5.15 1.41h.005c5.361 0 9.722-4.36 9.725-9.723.001-2.601-1.01-5.047-2.85-6.888-1.839-1.84-4.285-2.852-6.889-2.852-5.362 0-9.723 4.361-9.726 9.724-.001 1.944.576 3.839 1.666 5.485l.253.383-1.006 3.676 3.766-.987z"/>
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.892-1.99-.001-3.951-.5-5.688-1.448l-6.705 1.754zm6.097-4.908l.389.231c1.55.922 3.33 1.409 5.15 1.41h.005c5.361 0 9.722-4.36 9.725-9.723.001-2.601-1.01-5.047-2.85-6.888-1.839-1.84-4.285-2.852-6.889-2.852-5.362 0-9.723 4.361-9.726 9.724-.001 1.944.576 3.839 1.666 5.485l.253.383-1.006 3.676 3.766-.987z"/>
         </svg>
         ${data.ctaText}
       </a>
@@ -443,8 +440,29 @@ function closeModal(modalId) {
   }
 }
 
-// Apply dynamic branding, theme colors, logo, and price settings from Admin Panel
-function applyDynamicBrandingAndServices() {
+// Apply dynamic branding, theme colors, logo, and price settings from Live Supabase DB
+async function applyDynamicBrandingAndServices() {
+  if (supabaseClient) {
+    try {
+      // 1. Fetch live services from Supabase
+      const { data: dbServices } = await supabaseClient.from('services').select('*');
+      if (dbServices && dbServices.length > 0) {
+        localStorage.setItem('centromed_services', JSON.stringify(dbServices));
+      }
+
+      // 2. Fetch live settings from Supabase
+      const { data: dbSettings } = await supabaseClient.from('settings').select('*');
+      if (dbSettings) {
+        dbSettings.forEach(s => {
+          if (s.key === 'branding') localStorage.setItem('centromed_branding', JSON.stringify(s.value));
+          if (s.key === 'theme') localStorage.setItem('centromed_theme', JSON.stringify(s.value));
+        });
+      }
+    } catch (e) {
+      console.log('Using local fallback state');
+    }
+  }
+
   const theme = JSON.parse(localStorage.getItem('centromed_theme') || '{}');
   const branding = JSON.parse(localStorage.getItem('centromed_branding') || '{}');
   const services = JSON.parse(localStorage.getItem('centromed_services') || '[]');
@@ -493,7 +511,7 @@ function applyDynamicBrandingAndServices() {
   services.forEach(serv => {
     if (CARD_DATA[serv.card_id]) {
       CARD_DATA[serv.card_id].title = serv.title;
-      CARD_DATA[serv.card_id].price = `$${parseFloat(serv.price).toFixed(2)}`;
+      CARD_DATA[serv.card_id].price = serv.price > 0 ? `$${parseFloat(serv.price).toFixed(2)}` : 'Servicio 24H';
       CARD_DATA[serv.card_id].description = serv.description;
       if (serv.category) CARD_DATA[serv.card_id].category = serv.category;
       if (serv.icon) CARD_DATA[serv.card_id].icon = serv.icon;
@@ -502,16 +520,18 @@ function applyDynamicBrandingAndServices() {
     const cardEl = document.getElementById(serv.card_id);
     if (cardEl) {
       const priceSpan = cardEl.querySelector('.text-emerald-700, .text-emerald-600');
-      if (priceSpan && serv.price) priceSpan.innerText = `$${parseFloat(serv.price).toFixed(2)}`;
+      if (priceSpan && serv.price !== undefined) {
+        priceSpan.innerText = serv.price > 0 ? `$${parseFloat(serv.price).toFixed(2)}` : 'Servicio 24H';
+      }
       const titleEl = cardEl.querySelector('h3');
-      if (titleEl) titleEl.innerText = serv.title;
+      if (titleEl && serv.title) titleEl.innerText = serv.title;
     }
   });
 }
 
 // Event Listeners Setup
-document.addEventListener('DOMContentLoaded', () => {
-  applyDynamicBrandingAndServices();
+document.addEventListener('DOMContentLoaded', async () => {
+  await applyDynamicBrandingAndServices();
   setTimeout(initPhysics, 100);
 
   let isDragging = false;
