@@ -1,0 +1,8 @@
+# Ignorar archivos temporales y configuraciones locales
+.DS_Store
+Thumbs.db
+*.log
+node_modules/
+.vscode/
+.idea/
+server.ps1

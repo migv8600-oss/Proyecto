@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Centro Med | Consulta Médica Integral & Antigravedad</title>
+
+  <!-- Favicon SVG Data URI -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏥</text></svg>">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              800: '#0B1E36',
+              900: '#0A2540',
+            },
+            clinical: {
+              blue: '#0066FF',
+              light: '#F8FAFC',
+            },
+            whatsapp: {
+              DEFAULT: '#25D366',
+              hover: '#1EBE5B',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Matter.js Engine CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-clinical-light text-slate-800 antialiased relative min-h-screen selection:bg-blue-500 selection:text-white bg-grid-pattern">
+
+  <!-- ================= FIXED NAVIGATION BAR ================= -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-navy-900 to-clinical-blue text-white flex items-center justify-center font-black text-xl shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
+          <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+            <path d="M19 10.5h-5.5V5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v5.5H5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5h5.5V19c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-5.5H19c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5z"/>
+          </svg>
+        </div>
+        <div>
+          <span class="text-xl font-extrabold text-navy-900 tracking-tight block leading-none">Centro Med</span>
+          <span class="text-[11px] font-semibold text-clinical-blue tracking-wider uppercase">Consultorio Médico</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <div class="hidden md:flex items-center gap-8">
+        <button onclick="toggleViewMode('grid'); setTimeout(() => document.getElementById('service-1').scrollIntoView({behavior: 'smooth'}), 100);" class="text-sm font-semibold text-slate-700 hover:text-clinical-blue transition-colors">
+          Servicios
+        </button>
+        <button onclick="toggleViewMode('grid'); setTimeout(() => document.getElementById('testimonials-card').scrollIntoView({behavior: 'smooth'}), 100);" class="text-sm font-semibold text-slate-700 hover:text-clinical-blue transition-colors">
+          Testimonios
+        </button>
+        <button onclick="toggleViewMode('grid'); setTimeout(() => document.getElementById('contact-payments-card').scrollIntoView({behavior: 'smooth'}), 100);" class="text-sm font-semibold text-slate-700 hover:text-clinical-blue transition-colors">
+          Contacto
+        </button>
+      </div>
+
+      <!-- Actions Right -->
+      <div class="flex items-center gap-3">
+        <!-- Admin Access Button -->
+        <button onclick="openAdminModal()" class="px-3.5 py-2 rounded-xl border border-slate-200 text-slate-600 hover:text-navy-900 hover:border-slate-300 text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+          Admin
+        </button>
+
+        <!-- WhatsApp Direct CTA -->
+        <a href="https://wa.me/593999999999?text=Hola%20Centro%20Med%2C%20quisiera%20reservar%20una%20cita%20m%C3%A9dica" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-whatsapp hover:bg-whatsapp-hover text-white text-xs sm:text-sm font-extrabold flex items-center gap-2 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition hover:scale-[1.02] active:scale-95">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.705 1.754zm6.097-4.908l.389.231c1.55.922 3.33 1.409 5.15 1.41h.005c5.361 0 9.722-4.36 9.725-9.723.001-2.601-1.01-5.047-2.85-6.888-1.839-1.84-4.285-2.852-6.889-2.852-5.362 0-9.723 4.361-9.726 9.724-.001 1.944.576 3.839 1.666 5.485l.253.383-1.006 3.676 3.766-.987z"/>
+          </svg>
+          <span>Reservar Ahora</span>
+        </a>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- ================= FLOATING PHYSICS CONTAINER ================= -->
+  <main id="physics-container" class="relative w-full h-screen overflow-hidden pt-20">
+    
+    <!-- 1. HERO CARD -->
+    <div id="hero-card" data-card-id="hero-card" class="physics-card glass-card rounded-3xl p-6 sm:p-8 w-80 sm:w-96 border border-slate-200/90 shadow-2xl">
+      <div class="flex items-center justify-between mb-4">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-clinical-blue border border-blue-100 pulse-badge">
+          <span class="w-2 h-2 rounded-full bg-clinical-blue animate-ping"></span>
+          Consultorio Antigravedad
+        </span>
+        <span class="text-2xl">🏥</span>
+      </div>
+      <h1 class="text-2xl sm:text-3xl font-extrabold text-navy-900 tracking-tight leading-tight mb-2">
+        Centro Med
+      </h1>
+      <p class="text-sm text-slate-600 mb-6 leading-relaxed">
+        Atención médica integral con tecnología avanzada y profesionales dedicados a tu bienestar. ¡Toca o arrastra cualquier tarjeta!
+      </p>
+      <div class="flex flex-col gap-2.5">
+        <button class="w-full py-3 px-4 bg-navy-900 hover:bg-navy-800 text-white rounded-xl font-bold text-sm shadow-md transition flex items-center justify-center gap-2">
+          <span>Ver Detalles y Servicios</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. SERVICE CARD 1: Consulta General -->
+    <div id="service-1" data-card-id="service-1" class="physics-card glass-card rounded-2xl p-5 w-72 sm:w-80 border border-slate-200">
+      <div class="flex items-center justify-between mb-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-50 text-clinical-blue flex items-center justify-center text-xl font-bold">🩺</div>
+        <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$30.00</span>
+      </div>
+      <h3 class="text-lg font-bold text-navy-900 mb-1">Consulta Médica General</h3>
+      <p class="text-xs text-slate-500 mb-4 line-clamp-2">Evaluación clínica completa, toma de signos vitales y diagnóstico preventivo.</p>
+      <div class="flex items-center justify-between text-xs font-semibold text-clinical-blue">
+        <span>Click para detalles</span>
+        <span>→</span>
+      </div>
+    </div>
+
+    <!-- 3. SERVICE CARD 2: Chequeo Integral -->
+    <div id="service-2" data-card-id="service-2" class="physics-card glass-card rounded-2xl p-5 w-72 sm:w-80 border border-slate-200">
+      <div class="flex items-center justify-between mb-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-50 text-clinical-blue flex items-center justify-center text-xl font-bold">📊</div>
+        <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$75.00</span>
+      </div>
+      <h3 class="text-lg font-bold text-navy-900 mb-1">Chequeo Integral</h3>
+      <p class="text-xs text-slate-500 mb-4 line-clamp-2">Perfil completo de exámenes laboratorio y valoración médica personalizada.</p>
+      <div class="flex items-center justify-between text-xs font-semibold text-clinical-blue">
+        <span>Click para detalles</span>
+        <span>→</span>
+      </div>
+    </div>
+
+    <!-- 4. SERVICE CARD 3: Electrocardiograma -->
+    <div id="service-3" data-card-id="service-3" class="physics-card glass-card rounded-2xl p-5 w-72 sm:w-80 border border-slate-200">
+      <div class="flex items-center justify-between mb-3">
+        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl font-bold">❤️</div>
+        <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$45.00</span>
+      </div>
+      <h3 class="text-lg font-bold text-navy-900 mb-1">Electrocardiograma</h3>
+      <p class="text-xs text-slate-500 mb-4 line-clamp-2">Evaluación cardiológica rápida con diagnóstico e informe especializado.</p>
+      <div class="flex items-center justify-between text-xs font-semibold text-clinical-blue">
+        <span>Click para detalles</span>
+        <span>→</span>
+      </div>
+    </div>
+
+    <!-- 5. SERVICE CARD 4: Pediatría -->
+    <div id="service-4" data-card-id="service-4" class="physics-card glass-card rounded-2xl p-5 w-72 sm:w-80 border border-slate-200">
+      <div class="flex items-center justify-between mb-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl font-bold">👶</div>
+        <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$35.00</span>
+      </div>
+      <h3 class="text-lg font-bold text-navy-900 mb-1">Pediatría & Neonatología</h3>
+      <p class="text-xs text-slate-500 mb-4 line-clamp-2">Control de desarrollo infantil, vacunas y atención especializada con calidez.</p>
+      <div class="flex items-center justify-between text-xs font-semibold text-clinical-blue">
+        <span>Click para detalles</span>
+        <span>→</span>
+      </div>
+    </div>
+
+    <!-- 6. SERVICE CARD 5: Laboratorio Clínico -->
+    <div id="service-5" data-card-id="service-5" class="physics-card glass-card rounded-2xl p-5 w-72 sm:w-80 border border-slate-200">
+      <div class="flex items-center justify-between mb-3">
+        <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl font-bold">🧪</div>
+        <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$50.00</span>
+      </div>
+      <h3 class="text-lg font-bold text-navy-900 mb-1">Laboratorio Clínico</h3>
+      <p class="text-xs text-slate-500 mb-4 line-clamp-2">Análisis de sangre, hormonas y muestras con entregas el mismo día.</p>
+      <div class="flex items-center justify-between text-xs font-semibold text-clinical-blue">
+        <span>Click para detalles</span>
+        <span>→</span>
+      </div>
+    </div>
+
+    <!-- 7. SERVICE CARD 6: Odontología -->
+    <div id="service-6" data-card-id="service-6" class="physics-card glass-card rounded-2xl p-5 w-72 sm:w-80 border border-slate-200">
+      <div class="flex items-center justify-between mb-3">
+        <div class="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-xl font-bold">🦷</div>
+        <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$40.00</span>
+      </div>
+      <h3 class="text-lg font-bold text-navy-900 mb-1">Odontología Especializada</h3>
+      <p class="text-xs text-slate-500 mb-4 line-clamp-2">Limpieza ultrasónica, profilaxis dental y diseño de sonrisa.</p>
+      <div class="flex items-center justify-between text-xs font-semibold text-clinical-blue">
+        <span>Click para detalles</span>
+        <span>→</span>
+      </div>
+    </div>
+
+    <!-- 8. TESTIMONIALS CARD -->
+    <div id="testimonials-card" data-card-id="testimonials-card" class="physics-card glass-card rounded-2xl p-6 w-80 sm:w-84 border border-slate-200 shadow-lg">
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-500 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">Testimonios</span>
+        <div class="flex text-amber-400 text-sm font-bold">★★★★★</div>
+      </div>
+      <h3 class="text-lg font-bold text-navy-900 mb-2">Opiniones de Pacientes</h3>
+      <p class="text-xs italic text-slate-600 mb-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
+        "Excelente atención y diagnóstico certero. Reservar por WhatsApp fue súper fácil y rápido."
+      </p>
+      <div class="flex items-center justify-between text-xs">
+        <span class="font-bold text-slate-700">María G. - Paciente</span>
+        <span class="text-emerald-600 font-extrabold">⭐ 4.9/5</span>
+      </div>
+    </div>
+
+    <!-- 9. CONTACT & PAYMENTS CARD -->
+    <div id="contact-payments-card" data-card-id="contact-payments-card" class="physics-card glass-card rounded-2xl p-6 w-80 sm:w-90 border border-slate-200 shadow-lg">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="text-xl">💳</span>
+        <h3 class="text-lg font-bold text-navy-900">Horarios & Pagos</h3>
+      </div>
+      <div class="space-y-2 text-xs text-slate-600 mb-4">
+        <p class="flex justify-between border-b border-slate-100 pb-1">
+          <span class="font-semibold text-slate-700">Lun - Vie:</span>
+          <span>8:00 AM - 8:00 PM</span>
+        </p>
+        <p class="flex justify-between border-b border-slate-100 pb-1">
+          <span class="font-semibold text-slate-700">Sábados:</span>
+          <span>8:00 AM - 4:00 PM</span>
+        </p>
+      </div>
+      <div class="bg-blue-50/70 p-2.5 rounded-xl border border-blue-100 flex items-center justify-between text-xs text-navy-900 font-semibold">
+        <span>Formas de Pago:</span>
+        <span class="text-clinical-blue">💵 Efectivo | 💳 Tarjetas | 🏦 Transf.</span>
+      </div>
+    </div>
+
+    <!-- 10. SOCIAL MEDIA CARD -->
+    <div id="social-card" data-card-id="social-card" class="physics-card glass-card rounded-2xl p-5 w-72 border border-slate-200 shadow-lg">
+      <h3 class="text-sm font-bold text-navy-900 uppercase tracking-wider mb-3 text-center">Síguenos en Redes</h3>
+      <div class="flex items-center justify-center gap-4">
+        <!-- Facebook -->
+        <a href="https://facebook.com" target="_blank" onclick="event.stopPropagation()" class="w-11 h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-lg hover:scale-110 transition-transform shadow-md">
+          f
+        </a>
+        <!-- Instagram -->
+        <a href="https://instagram.com" target="_blank" onclick="event.stopPropagation()" class="w-11 h-11 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white flex items-center justify-center font-bold text-lg hover:scale-110 transition-transform shadow-md">
+          📷
+        </a>
+        <!-- TikTok -->
+        <a href="https://tiktok.com" target="_blank" onclick="event.stopPropagation()" class="w-11 h-11 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-lg hover:scale-110 transition-transform shadow-md">
+          🎵
+        </a>
+      </div>
+    </div>
+
+    <!-- 11. GPS LOCATION CARD -->
+    <div id="gps-card" data-card-id="gps-card" class="physics-card glass-card rounded-2xl p-5 w-80 border border-slate-200 shadow-lg">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-xl font-bold">📍</div>
+        <div>
+          <h3 class="text-base font-bold text-navy-900">Ubicación GPS</h3>
+          <span class="text-xs text-slate-500">Av. Principal de la Salud #450</span>
+        </div>
+      </div>
+      <p class="text-xs text-slate-600 mb-3">Frente al Parque Central. Estacionamiento privado disponible.</p>
+      <a href="https://maps.google.com" target="_blank" onclick="event.stopPropagation()" class="w-full py-2 px-3 bg-blue-50 hover:bg-blue-100 text-clinical-blue font-bold text-xs rounded-xl flex items-center justify-center gap-2 border border-blue-200 transition">
+        <span>🗺️ Abrir en Google Maps</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- ================= FLOATING CONTROL DOCK ================= -->
+  <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 glass-control rounded-2xl p-2 flex items-center gap-2 shadow-2xl">
+    <!-- Zero Gravity Mode Button -->
+    <button id="btn-zerog" onclick="toggleViewMode('zerog')" class="px-4 py-2.5 rounded-xl bg-clinical-blue text-white text-xs sm:text-sm font-bold flex items-center gap-2 transition shadow-md">
+      <span>🌌 Gravedad 0</span>
+    </button>
+
+    <!-- Grid Layout Mode Button -->
+    <button id="btn-grid" onclick="toggleViewMode('grid')" class="px-4 py-2.5 rounded-xl text-slate-300 hover:text-white text-xs sm:text-sm font-bold flex items-center gap-2 transition">
+      <span>📐 Modo Cuadrícula</span>
+    </button>
+
+    <!-- Shake / Scatter Cards Button -->
+    <button id="btn-shake" onclick="shakeCards()" class="px-3 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition flex items-center gap-1.5" title="Empujar y agitar elementos">
+      <span>⚡ Agitar</span>
+    </button>
+  </div>
+
+  <!-- ================= CARD DETAIL MODAL ================= -->
+  <div id="card-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-slate-100 transform transition-all relative animate-in fade-in zoom-in duration-200">
+      
+      <!-- Close Button X -->
+      <button onclick="closeModal('card-modal')" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-800 flex items-center justify-center font-bold text-lg transition">
+        ✕
+      </button>
+
+      <!-- Dynamic Content Injection Container -->
+      <div id="modal-content"></div>
+
+    </div>
+  </div>
+
+  <!-- ================= ADMIN MOCK PANEL MODAL ================= -->
+  <div id="admin-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-slate-100 relative">
+      
+      <!-- Close Button X -->
+      <button onclick="closeModal('admin-modal')" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 flex items-center justify-center font-bold text-lg transition">
+        ✕
+      </button>
+
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-navy-900 text-white flex items-center justify-center text-xl font-bold">
+          ⚙️
+        </div>
+        <div>
+          <h3 class="text-xl font-extrabold text-navy-900">Panel de Administración</h3>
+          <span class="text-xs text-slate-500">Gestión de Citas y Servicios Centro Med</span>
+        </div>
+      </div>
+
+      <div id="admin-status" class="hidden mb-4 p-3 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-xl border border-emerald-200">
+        ✓ Cambios guardados correctamente en la base de datos simulada.
+      </div>
+
+      <form id="admin-form" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Usuario Administrador</label>
+          <input type="text" value="admin@centromed.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm font-medium focus:outline-none focus:border-clinical-blue" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Contraseña</label>
+          <input type="password" value="••••••••••••" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm font-medium focus:outline-none focus:border-clinical-blue" />
+        </div>
+        <div class="pt-2 flex gap-3">
+          <button type="button" onclick="closeModal('admin-modal')" class="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 transition">
+            Cancelar
+          </button>
+          <button type="submit" class="flex-1 py-2.5 rounded-xl bg-navy-900 hover:bg-navy-800 text-white font-bold text-sm shadow-lg transition">
+            Iniciar Sesión
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Custom App JavaScript Script -->
+  <script src="app.js"></script>
+</body>
+</html>
