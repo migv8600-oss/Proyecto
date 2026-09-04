@@ -201,28 +201,31 @@ function initPhysics() {
   const cards = Array.from(document.querySelectorAll('.physics-card'));
   cardBodies = [];
 
-  const cols = width < 768 ? 1 : (width < 1280 ? 3 : 4);
-  const paddingX = width < 768 ? 20 : 60;
-  const startY = width < 768 ? 110 : 130;
+  // Responsive grid: 1 col on mobile, 2 on tablet, 3-4 on desktop
+  const isMobile = width < 640;
+  const isTablet = width >= 640 && width < 1024;
+  const cols = isMobile ? 2 : (isTablet ? 3 : 4);
+  const paddingX = isMobile ? 12 : 50;
+  const startY = isMobile ? 95 : 120;
+
+  // On mobile, use fixed small card size for proper spacing
+  const cardW = isMobile ? 240 : (isTablet ? 270 : 290);
+  const cardH = isMobile ? 155 : 175;
   const cellW = (width - paddingX * 2) / cols;
-  const cellH = 220;
+  const cellH = isMobile ? (cardH + 20) : (cardH + 35);
 
   cards.forEach((cardEl, idx) => {
     const colIdx = idx % cols;
     const rowIdx = Math.floor(idx / cols);
 
     const slotX = paddingX + (colIdx * cellW) + (cellW / 2);
-    const slotY = startY + (rowIdx * cellH) + 90;
-
-    const rect = cardEl.getBoundingClientRect();
-    const cardW = rect.width || 310;
-    const cardH = rect.height || 185;
+    const slotY = startY + (rowIdx * cellH) + (cardH / 2) + 10;
 
     const body = Bodies.rectangle(slotX, slotY, cardW, cardH, {
       frictionAir: 0.035,
       friction: 0.15,
       restitution: 0.4,
-      chamfer: { radius: 18 }
+      chamfer: { radius: 14 }
     });
 
     body.targetSlot = { x: slotX, y: slotY };
@@ -257,9 +260,9 @@ function initPhysics() {
         if (body && body.domElement) {
           const { x, y } = body.position;
           const angle = body.angle;
-          const rect = body.domElement.getBoundingClientRect();
-          const halfW = rect.width / 2;
-          const halfH = rect.height / 2;
+          const el = body.domElement;
+          const halfW = (el.offsetWidth || 240) / 2;
+          const halfH = (el.offsetHeight || 155) / 2;
 
           const speed = Vector.magnitude(body.velocity);
           if (speed < 0.15 && body.targetSlot) {

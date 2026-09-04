@@ -127,3 +127,56 @@ body {
 .emergency-pulse {
   animation: pulse-emergency 2.5s infinite ease-in-out;
 }
+
+/* ================= MOBILE ADAPTATIONS (< 640px) ================= */
+@media (max-width: 639px) {
+  :root {
+    --card-radius: 1rem;
+  }
+
+  /* Compact Navbar for Phones */
+  .glass-nav {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  /* Smaller Floating Cards on Mobile */
+  .physics-card, .grid-mode-card {
+    width: 250px !important;
+    padding: 0.875rem !important;
+  }
+
+  /* Smaller Headings & Text in Cards */
+  .physics-card h1, .grid-mode-card h1 {
+    font-size: 1.25rem !important;
+  }
+  .physics-card h3, .grid-mode-card h3 {
+    font-size: 0.925rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+  .physics-card p, .grid-mode-card p {
+    font-size: 0.725rem !important;
+    margin-bottom: 0.5rem !important;
+    line-clamp: 2 !important;
+  }
+
+  /* Grid mode on mobile: 2 compact columns */
+  .grid-mode-container {
+    grid-template-columns: repeat(2, 1fr) !important;
+    padding: 5.5rem 0.75rem 6rem 0.75rem !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Compact Control Dock on Phones */
+  .glass-control {
+    bottom: 0.75rem !important;
+    padding: 0.35rem 0.5rem !important;
+    gap: 0.35rem !important;
+    max-width: 92% !important;
+  }
+  .glass-control button {
+    padding: 0.4rem 0.65rem !important;
+    font-size: 0.7rem !important;
+  }
+}
+
