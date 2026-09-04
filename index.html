@@ -81,22 +81,38 @@
 
       <!-- Desktop Navigation Links -->
       <div class="hidden lg:flex items-center gap-7">
-        <button onclick="toggleViewMode('grid'); setTimeout(() => document.getElementById('service-1').scrollIntoView({behavior: 'smooth'}), 100);" class="text-xs font-bold text-slate-200 hover:text-white transition-colors">
-          Servicios
+
+        <!-- Servicios → Modo cuadrícula y scroll a servicios -->
+        <button onclick="toggleViewMode('grid'); setTimeout(() => document.getElementById('service-1').scrollIntoView({behavior:'smooth'}), 150);" class="text-xs font-bold text-slate-200 hover:text-white transition-colors">
+          🩺 Servicios
         </button>
-        <button onclick="toggleViewMode('grid'); setTimeout(() => document.getElementById('service-4').scrollIntoView({behavior: 'smooth'}), 100);" class="text-xs font-bold text-slate-200 hover:text-white transition-colors">
-          Cirugía & Traumatología
-        </button>
-        <button onclick="toggleViewMode('grid'); setTimeout(() => document.getElementById('service-5').scrollIntoView({behavior: 'smooth'}), 100);" class="text-xs font-bold text-rose-300 hover:text-rose-200 transition-colors flex items-center gap-1">
+
+        <!-- Cirugía & Traumatología → WhatsApp con mensaje directo -->
+        <a href="https://wa.me/5930992834462?text=Hola%20Centro%20Med%2C%20quisiera%20informaci%C3%B3n%20sobre%20Cirug%C3%ADa%20General%20y%20Traumatolog%C3%ADa." target="_blank" class="text-xs font-bold text-slate-200 hover:text-white transition-colors">
+          🔪 Cirugía & Traumatología
+        </a>
+
+        <!-- Emergencias 24H → Llamada telefónica directa -->
+        <a href="tel:0992834462" class="text-xs font-extrabold text-rose-300 hover:text-white hover:bg-rose-600 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5">
           <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
           Emergencias 24H
+        </a>
+
+        <!-- Sistema HC → WhatsApp para solicitar acceso -->
+        <a href="https://wa.me/5930992834462?text=Hola%20Centro%20Med%2C%20quisiera%20acceso%20al%20Sistema%20de%20Historias%20Cl%C3%ADnicas%20HC." target="_blank" class="text-xs font-bold text-slate-200 hover:text-white transition-colors">
+          💻 Sistema HC
+        </a>
+
+        <!-- Reseñas → Scroll a sección de reseñas -->
+        <button onclick="document.getElementById('resenas').scrollIntoView({behavior:'smooth'});" class="text-xs font-bold text-slate-200 hover:text-white transition-colors">
+          ⭐ Reseñas
         </button>
-        <button onclick="toggleViewMode('grid'); setTimeout(() => document.getElementById('sistema-hc-card').scrollIntoView({behavior: 'smooth'}), 100);" class="text-xs font-bold text-slate-200 hover:text-white transition-colors">
-          Sistema HC
-        </button>
-        <button onclick="toggleViewMode('grid'); setTimeout(() => document.getElementById('contact-payments-card').scrollIntoView({behavior: 'smooth'}), 100);" class="text-xs font-bold text-slate-200 hover:text-white transition-colors">
-          Contacto
-        </button>
+
+        <!-- Contacto → WhatsApp para contactar recepción -->
+        <a href="https://wa.me/5930992834462?text=Hola%20Centro%20Med%2C%20quisiera%20comunicarme%20con%20recepci%C3%B3n." target="_blank" class="text-xs font-bold text-slate-200 hover:text-white transition-colors">
+          📞 Contacto
+        </a>
+
       </div>
 
       <!-- Actions Right -->
