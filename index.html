@@ -134,11 +134,11 @@
     </div>
   </nav>
 
-  <!-- ================= FLOATING PHYSICS CONTAINER ================= -->
-  <main id="physics-container" class="relative w-full h-screen overflow-hidden pt-24 sm:pt-28">
+  <!-- ================= GRID MODE CONTAINER (PERMANENTE & RESPONSIVO) ================= -->
+  <main id="physics-container" class="grid-mode-container">
     
     <!-- 1. HERO CARD -->
-    <div id="hero-card" data-card-id="hero-card" class="physics-card glass-card rounded-3xl p-5 sm:p-7 w-64 sm:w-88 border border-slate-200/90 shadow-2xl">
+    <div id="hero-card" data-card-id="hero-card" class="grid-mode-card glass-card rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-md">
       <div class="flex items-center justify-between mb-3">
         <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-extrabold bg-blue-50 text-[#0A2540] border border-blue-100 emergency-pulse">
           <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
@@ -149,19 +149,19 @@
       <h1 class="text-xl sm:text-3xl font-black text-[#0A2540] tracking-tight leading-tight mb-2 brand-name-text">
         Centro Med
       </h1>
-      <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-        Atención médica especializada con tecnología avanzada y profesionales comprometidos con tu bienestar. Toca o arrastra cualquier tarjeta en Antigravedad.
+      <p class="text-xs sm:text-sm text-slate-600 mb-4 leading-relaxed">
+        Atención médica especializada con tecnología avanzada y profesionales comprometidos con tu bienestar. Tu salud en las mejores manos.
       </p>
       <div class="flex flex-col gap-2">
-        <button class="w-full py-2.5 px-4 bg-[#0A2540] hover:bg-[#0B1E36] text-white rounded-xl font-bold text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2">
-          <span>Ver Especialidades & Quirófanos</span>
+        <a href="https://wa.me/5930992834462?text=Hola%20Centro%20Med%2C%20quisiera%20agendar%20una%20consulta%20m%C3%A9dica" target="_blank" class="w-full py-2.5 px-4 bg-[#0A2540] hover:bg-[#0B1E36] text-white rounded-xl font-bold text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2">
+          <span>Agendar Consulta Médica</span>
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-        </button>
+        </a>
       </div>
     </div>
 
     <!-- 2. SERVICE CARD 1: Medicina General -->
-    <div id="service-1" data-card-id="service-1" class="physics-card glass-card rounded-2xl p-4 sm:p-5 w-60 sm:w-72 border border-slate-200">
+    <div id="service-1" data-card-id="service-1" class="grid-mode-card glass-card rounded-2xl p-5 border border-slate-200">
       <div class="flex items-center justify-between mb-3">
         <div class="w-10 h-10 rounded-xl bg-blue-50 text-[#0066FF] flex items-center justify-center text-xl font-bold">🩺</div>
         <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$30.00</span>
@@ -175,7 +175,7 @@
     </div>
 
     <!-- 3. SERVICE CARD 2: Ginecología & Obstetricia -->
-    <div id="service-2" data-card-id="service-2" class="physics-card glass-card rounded-2xl p-4 sm:p-5 w-60 sm:w-72 border border-slate-200">
+    <div id="service-2" data-card-id="service-2" class="grid-mode-card glass-card rounded-2xl p-5 border border-slate-200">
       <div class="flex items-center justify-between mb-3">
         <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl font-bold">🤰</div>
         <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$40.00</span>
@@ -189,7 +189,7 @@
     </div>
 
     <!-- 4. SERVICE CARD 3: Traumatología -->
-    <div id="service-3" data-card-id="service-3" class="physics-card glass-card rounded-2xl p-4 sm:p-5 w-60 sm:w-72 border border-slate-200">
+    <div id="service-3" data-card-id="service-3" class="grid-mode-card glass-card rounded-2xl p-5 border border-slate-200">
       <div class="flex items-center justify-between mb-3">
         <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl font-bold">🦴</div>
         <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$45.00</span>
@@ -203,7 +203,7 @@
     </div>
 
     <!-- 5. SERVICE CARD 4: Cirugía General & Laparoscópica -->
-    <div id="service-4" data-card-id="service-4" class="physics-card glass-card rounded-2xl p-4 sm:p-5 w-60 sm:w-72 border border-slate-200">
+    <div id="service-4" data-card-id="service-4" class="grid-mode-card glass-card rounded-2xl p-5 border border-slate-200">
       <div class="flex items-center justify-between mb-3">
         <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl font-bold">🔪</div>
         <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$120.00</span>
@@ -217,7 +217,7 @@
     </div>
 
     <!-- 6. SERVICE CARD 5: Emergencias 24H -->
-    <div id="service-5" data-card-id="service-5" class="physics-card glass-card rounded-2xl p-4 sm:p-5 w-60 sm:w-72 border-2 border-rose-200 bg-rose-50/40">
+    <div id="service-5" data-card-id="service-5" class="grid-mode-card glass-card rounded-2xl p-5 border-2 border-rose-200 bg-rose-50/40">
       <div class="flex items-center justify-between mb-3">
         <div class="w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center text-xl font-bold shadow-md">🚑</div>
         <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-rose-600 text-white emergency-pulse">🔴 Activo 24H</span>
@@ -231,7 +231,7 @@
     </div>
 
     <!-- 7. SERVICE CARD 6: Laboratorio Clínico -->
-    <div id="service-6" data-card-id="service-6" class="physics-card glass-card rounded-2xl p-4 sm:p-5 w-60 sm:w-72 border border-slate-200">
+    <div id="service-6" data-card-id="service-6" class="grid-mode-card glass-card rounded-2xl p-5 border border-slate-200">
       <div class="flex items-center justify-between mb-3">
         <div class="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-xl font-bold">🧪</div>
         <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$50.00</span>
@@ -245,7 +245,7 @@
     </div>
 
     <!-- 8. SERVICE CARD 7: Internaciones -->
-    <div id="service-7" data-card-id="service-7" class="physics-card glass-card rounded-2xl p-4 sm:p-5 w-60 sm:w-72 border border-slate-200">
+    <div id="service-7" data-card-id="service-7" class="grid-mode-card glass-card rounded-2xl p-5 border border-slate-200">
       <div class="flex items-center justify-between mb-3">
         <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl font-bold">🛋️</div>
         <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">$80.00/día</span>
@@ -259,7 +259,7 @@
     </div>
 
     <!-- 9. SERVICE CARD 8: Farmacia Interna 24H -->
-    <div id="service-8" data-card-id="service-8" class="physics-card glass-card rounded-2xl p-4 sm:p-5 w-60 sm:w-72 border border-slate-200">
+    <div id="service-8" data-card-id="service-8" class="grid-mode-card glass-card rounded-2xl p-5 border border-slate-200">
       <div class="flex items-center justify-between mb-3">
         <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-xl font-bold">💊</div>
         <span class="px-2.5 py-1 rounded-full text-xs font-extrabold bg-blue-50 text-[#0066FF] border border-blue-200">Stock 24H</span>
@@ -273,12 +273,12 @@
     </div>
 
     <!-- 10. TESTIMONIALS & TRADITION -->
-    <div id="testimonials-card" data-card-id="testimonials-card" class="physics-card glass-card rounded-2xl p-4 sm:p-6 w-60 sm:w-80 border border-slate-200 shadow-lg">
+    <div id="testimonials-card" data-card-id="testimonials-card" class="grid-mode-card glass-card rounded-2xl p-5 border border-slate-200 shadow-md">
       <div class="flex items-center justify-between mb-3">
         <span class="text-xs font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">Confianza & Calidez</span>
         <div class="flex text-amber-400 text-sm font-bold">★★★★★</div>
       </div>
-      <h3 class="text-sm sm:text-base font-extrabold text-[#0A2540] mb-2">Trato Humano: Cada Paciente es Familia</h3>
+      <h3 class="text-base font-extrabold text-[#0A2540] mb-2">Trato Humano: Cada Paciente es Familia</h3>
       <p class="text-xs italic text-slate-600 mb-3 bg-slate-50 p-2.5 rounded-xl border border-slate-100 leading-relaxed">
         "Excelente atención clínica, trato muy humano y profesional de médicos y enfermeras de Centro Med."
       </p>
@@ -289,10 +289,10 @@
     </div>
 
     <!-- 11. CONTACT & PAYMENTS CARD -->
-    <div id="contact-payments-card" data-card-id="contact-payments-card" class="physics-card glass-card rounded-2xl p-4 sm:p-6 w-60 sm:w-80 border border-slate-200 shadow-lg">
+    <div id="contact-payments-card" data-card-id="contact-payments-card" class="grid-mode-card glass-card rounded-2xl p-5 border border-slate-200 shadow-md">
       <div class="flex items-center gap-2 mb-3">
         <span class="text-lg">📞</span>
-        <h3 class="text-sm font-extrabold text-[#0A2540]">Horarios & Teléfonos</h3>
+        <h3 class="text-base font-extrabold text-[#0A2540]">Horarios & Teléfonos</h3>
       </div>
       <div class="space-y-1.5 text-xs text-slate-600 mb-3">
         <p class="flex justify-between border-b border-slate-100 pb-1">
@@ -315,11 +315,11 @@
     </div>
 
     <!-- 12. GPS LOCATION CARD -->
-    <div id="gps-card" data-card-id="gps-card" class="physics-card glass-card rounded-2xl p-4 sm:p-5 w-60 sm:w-80 border border-slate-200 shadow-lg">
+    <div id="gps-card" data-card-id="gps-card" class="grid-mode-card glass-card rounded-2xl p-5 border border-slate-200 shadow-md">
       <div class="flex items-center gap-3 mb-3">
         <div class="w-9 h-9 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-lg font-bold">📍</div>
         <div>
-          <h3 class="text-sm font-extrabold text-[#0A2540]">Ubicación Centro Med</h3>
+          <h3 class="text-base font-extrabold text-[#0A2540]">Ubicación Centro Med</h3>
           <span class="text-xs text-slate-500">Av. Principal de la Salud #450</span>
         </div>
       </div>
@@ -330,11 +330,11 @@
     </div>
 
     <!-- 13. SISTEMA HC CARD -->
-    <div id="sistema-hc-card" data-card-id="sistema-hc-card" class="physics-card glass-card rounded-2xl p-4 sm:p-5 w-60 sm:w-80 border border-slate-200 shadow-lg">
+    <div id="sistema-hc-card" data-card-id="sistema-hc-card" class="grid-mode-card glass-card rounded-2xl p-5 border border-slate-200 shadow-md">
       <div class="flex items-center gap-3 mb-3">
         <div class="w-9 h-9 rounded-xl bg-blue-50 text-[#0066FF] flex items-center justify-center text-lg font-bold">💻</div>
         <div>
-          <h3 class="text-sm font-extrabold text-[#0A2540]">Historias Clínicas</h3>
+          <h3 class="text-base font-extrabold text-[#0A2540]">Historias Clínicas</h3>
           <span class="text-xs text-slate-500">Portal Digital de Pacientes</span>
         </div>
       </div>
@@ -482,6 +482,132 @@
     </div>
   </section>
 
+  <!-- ================= SECCIÓN MÉTODOS DE PAGO ================= -->
+  <section id="pagos" class="bg-[#EEF4F8] border-t border-slate-200 py-14 px-4 sm:px-8">
+    <div class="max-w-5xl mx-auto">
+
+      <!-- Encabezado -->
+      <div class="text-center mb-10">
+        <span class="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-[#0066FF] text-xs font-extrabold uppercase tracking-widest border border-blue-200 mb-4">
+          💳 Métodos de Pago Aceptados
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-black text-[#0A2540] mb-2">Paga como más te convenga</h2>
+        <p class="text-slate-500 text-sm max-w-lg mx-auto">En Centro Med aceptamos múltiples formas de pago para tu comodidad. Precios transparentes, sin cobros ocultos.</p>
+      </div>
+
+      <!-- Grid de Métodos de Pago -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
+
+        <!-- Efectivo -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 flex flex-col items-center text-center gap-3 hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-3xl">
+            💵
+          </div>
+          <div>
+            <p class="font-extrabold text-[#0A2540] text-sm">Efectivo</p>
+            <p class="text-xs text-slate-500 mt-0.5">USD · Dólares</p>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">Aceptado</span>
+        </div>
+
+        <!-- Tarjeta de Crédito -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 flex flex-col items-center text-center gap-3 hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+          <div class="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-center text-3xl">
+            💳
+          </div>
+          <div>
+            <p class="font-extrabold text-[#0A2540] text-sm">Tarjeta de Crédito</p>
+            <p class="text-xs text-slate-500 mt-0.5">Visa · MasterCard · Amex</p>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-50 text-[#0066FF] border border-blue-200">Aceptado</span>
+        </div>
+
+        <!-- Tarjeta de Débito -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 flex flex-col items-center text-center gap-3 hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+          <div class="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-200 flex items-center justify-center text-3xl">
+            🏧
+          </div>
+          <div>
+            <p class="font-extrabold text-[#0A2540] text-sm">Tarjeta de Débito</p>
+            <p class="text-xs text-slate-500 mt-0.5">Banco Pichincha · Pacífico</p>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-200">Aceptado</span>
+        </div>
+
+        <!-- Transferencia Bancaria -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 flex flex-col items-center text-center gap-3 hover:shadow-md hover:-translate-y-1 transition-all duration-200">
+          <div class="w-14 h-14 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-center text-3xl">
+            🏦
+          </div>
+          <div>
+            <p class="font-extrabold text-[#0A2540] text-sm">Transferencia</p>
+            <p class="text-xs text-slate-500 mt-0.5">Banco Pichincha · BCE</p>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-50 text-amber-700 border border-amber-200">Aceptado</span>
+        </div>
+
+        <!-- Convenios / Seguro -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 flex flex-col items-center text-center gap-3 hover:shadow-md hover:-translate-y-1 transition-all duration-200 col-span-2 sm:col-span-1">
+          <div class="w-14 h-14 rounded-2xl bg-teal-50 border border-teal-200 flex items-center justify-center text-3xl">
+            🛡️
+          </div>
+          <div>
+            <p class="font-extrabold text-[#0A2540] text-sm">Seguro Médico</p>
+            <p class="text-xs text-slate-500 mt-0.5">Convenios & IESS</p>
+          </div>
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-teal-50 text-teal-700 border border-teal-200">Consultar</span>
+        </div>
+
+      </div>
+
+      <!-- Cuadro informativo de datos bancarios -->
+      <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+        <div class="bg-[#0A2540] px-6 py-4 flex items-center gap-3">
+          <span class="text-xl">🏦</span>
+          <h3 class="text-white font-extrabold text-sm">Datos para Transferencia o Depósito Bancario</h3>
+        </div>
+        <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between border-b border-slate-100 pb-2">
+              <span class="text-slate-500 font-semibold">Banco:</span>
+              <span class="font-extrabold text-[#0A2540]">Banco Pichincha</span>
+            </div>
+            <div class="flex justify-between border-b border-slate-100 pb-2">
+              <span class="text-slate-500 font-semibold">Tipo de Cuenta:</span>
+              <span class="font-extrabold text-[#0A2540]">Corriente</span>
+            </div>
+            <div class="flex justify-between border-b border-slate-100 pb-2">
+              <span class="text-slate-500 font-semibold">N° de Cuenta:</span>
+              <span class="font-extrabold text-[#0066FF]">XXXX-XXXX-0001</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-500 font-semibold">Titular:</span>
+              <span class="font-extrabold text-[#0A2540]">Centro Med S.A.</span>
+            </div>
+          </div>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between border-b border-slate-100 pb-2">
+              <span class="text-slate-500 font-semibold">RUC / CI Titular:</span>
+              <span class="font-extrabold text-[#0A2540]">XXXXXXXXXXXX001</span>
+            </div>
+            <div class="flex justify-between border-b border-slate-100 pb-2">
+              <span class="text-slate-500 font-semibold">Email Notificación:</span>
+              <span class="font-extrabold text-[#0066FF] text-xs">pagos@centromed.ec</span>
+            </div>
+            <div class="pt-1">
+              <a href="https://wa.me/5930992834462?text=Hola%20Centro%20Med%2C%20realic%C3%A9%20una%20transferencia%20y%20quisiera%20enviar%20el%20comprobante." target="_blank"
+                class="w-full py-2.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#1EBE5B] text-white text-xs font-extrabold flex items-center justify-center gap-2 transition shadow-md">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.705 1.754zm6.097-4.908l.389.231c1.55.922 3.33 1.409 5.15 1.41h.005c5.361 0 9.722-4.36 9.725-9.723.001-2.601-1.01-5.047-2.85-6.888-1.839-1.84-4.285-2.852-6.889-2.852-5.362 0-9.723 4.361-9.726 9.724-.001 1.944.576 3.839 1.666 5.485l.253.383-1.006 3.676 3.766-.987z"/></svg>
+                Enviar Comprobante por WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ================= FOOTER ================= -->
   <footer class="bg-[#0A2540] text-white py-10 px-4 sm:px-8">
     <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -501,19 +627,19 @@
   </footer>
 
   <!-- ================= FLOATING CONTROL DOCK ================= -->
-  <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 glass-control rounded-2xl p-2 flex items-center gap-2 shadow-2xl">
-    <!-- Zero Gravity Mode Button -->
-    <button id="btn-zerog" onclick="toggleViewMode('zerog')" class="px-4 py-2.5 rounded-xl bg-[#0066FF] text-white text-xs sm:text-sm font-bold flex items-center gap-2 transition shadow-md">
-      <span>🌌 Gravedad 0</span>
-    </button>
-
-    <!-- Grid Layout Mode Button -->
-    <button id="btn-grid" onclick="toggleViewMode('grid')" class="px-4 py-2.5 rounded-xl text-slate-300 hover:text-white text-xs sm:text-sm font-bold flex items-center gap-2 transition">
+  <div class="fixed bottom-5 left-1/2 -translate-x-1/2 z-40 glass-control rounded-2xl p-1.5 flex items-center gap-1.5 shadow-2xl">
+    <!-- Grid Layout Mode Button (Activo Predeterminado) -->
+    <button id="btn-grid" onclick="toggleViewMode('grid')" class="px-4 py-2 rounded-xl bg-[#0066FF] text-white text-xs sm:text-sm font-bold flex items-center gap-2 transition shadow-md">
       <span>📐 Modo Cuadrícula</span>
     </button>
 
-    <!-- Shake / Scatter Cards Button -->
-    <button id="btn-shake" onclick="shakeCards()" class="px-3 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition flex items-center gap-1.5" title="Empujar y agitar elementos">
+    <!-- Zero Gravity Mode Button (Secundario) -->
+    <button id="btn-zerog" onclick="toggleViewMode('zerog')" class="px-4 py-2 rounded-xl text-slate-300 hover:text-white text-xs sm:text-sm font-bold flex items-center gap-2 transition">
+      <span>🌌 Modo Flotante</span>
+    </button>
+
+    <!-- Shake Button (Oculto en cuadrícula) -->
+    <button id="btn-shake" onclick="shakeCards()" class="hidden px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition flex items-center gap-1.5" title="Empujar y agitar elementos">
       <span>⚡ Agitar</span>
     </button>
   </div>

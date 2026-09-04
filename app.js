@@ -6,7 +6,7 @@ let engine, world;
 let cardBodies = [];
 let wallBodies = [];
 let mouseConstraint;
-let isGridMode = false;
+let isGridMode = true;
 let isPhysicsInitialized = false;
 
 const SUPABASE_URL = 'https://aokvisoqggsolnrttopb.supabase.co';
@@ -316,37 +316,43 @@ function toggleViewMode(targetMode) {
     container.classList.remove('h-screen', 'overflow-hidden');
     container.classList.add('grid-mode-container');
 
-    cardBodies.forEach(body => {
-      if (body && body.domElement) {
-        body.domElement.classList.remove('physics-card');
-        body.domElement.classList.add('grid-mode-card');
-        body.domElement.style.transform = '';
-      }
+    const cards = document.querySelectorAll('.grid-mode-card, .physics-card');
+    cards.forEach(el => {
+      el.classList.remove('physics-card');
+      el.classList.add('grid-mode-card');
+      el.style.transform = '';
     });
 
-    btnZeroG.classList.remove('bg-[#134074]', 'text-white');
-    btnZeroG.classList.add('text-slate-300', 'hover:text-white');
-    btnGrid.classList.add('bg-[#134074]', 'text-white');
-    btnGrid.classList.remove('text-slate-300');
+    if (btnZeroG && btnGrid) {
+      btnZeroG.classList.remove('bg-[#0066FF]', 'text-white', 'shadow-md');
+      btnZeroG.classList.add('text-slate-300', 'hover:text-white');
+      btnGrid.classList.add('bg-[#0066FF]', 'text-white', 'shadow-md');
+      btnGrid.classList.remove('text-slate-300');
+    }
     if (shakeBtn) shakeBtn.classList.add('hidden');
   } else {
     isGridMode = false;
     container.classList.add('h-screen', 'overflow-hidden');
     container.classList.remove('grid-mode-container');
 
-    cardBodies.forEach(body => {
-      if (body && body.domElement) {
-        body.domElement.classList.add('physics-card');
-        body.domElement.classList.remove('grid-mode-card');
-      }
+    if (!isPhysicsInitialized) {
+      initPhysics();
+    }
+
+    const cards = document.querySelectorAll('.grid-mode-card, .physics-card');
+    cards.forEach(el => {
+      el.classList.add('physics-card');
+      el.classList.remove('grid-mode-card');
     });
 
     organizeMatrix();
 
-    btnGrid.classList.remove('bg-[#134074]', 'text-white');
-    btnGrid.classList.add('text-slate-300', 'hover:text-white');
-    btnZeroG.classList.add('bg-[#134074]', 'text-white');
-    btnZeroG.classList.remove('text-slate-300');
+    if (btnZeroG && btnGrid) {
+      btnGrid.classList.remove('bg-[#0066FF]', 'text-white', 'shadow-md');
+      btnGrid.classList.add('text-slate-300', 'hover:text-white');
+      btnZeroG.classList.add('bg-[#0066FF]', 'text-white', 'shadow-md');
+      btnZeroG.classList.remove('text-slate-300');
+    }
     if (shakeBtn) shakeBtn.classList.remove('hidden');
   }
 }
@@ -535,7 +541,7 @@ async function applyDynamicBrandingAndServices() {
 // Event Listeners Setup
 document.addEventListener('DOMContentLoaded', async () => {
   await applyDynamicBrandingAndServices();
-  setTimeout(initPhysics, 100);
+  toggleViewMode('grid');
 
   let isDragging = false;
   let startX = 0;
